@@ -5,6 +5,7 @@ import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 public class PrincipalController {
-	
+
 	@FXML ImageView imageView1;
 	@FXML ImageView imageView2;
 	@FXML ImageView imageView3;
@@ -20,97 +21,98 @@ public class PrincipalController {
 	@FXML Label labelR;
 	@FXML Label labelG;
 	@FXML Label labelB;
-	
-	@FXML Slider slidA;
-	
+
+	@FXML TextField textFieldR;
+	@FXML TextField textFieldG;
+	@FXML TextField textFieldB;
+
+	@FXML Slider sliderLimiar;
+
 	private Image img1;
 	private Image img2;
 	private Image img3;
-	
-	
+
 	@FXML
-	private void abreImage1() {
-		img1 = abreImage(imageView1, img1);
+	private Label labelValorLimiar;
+
+	@FXML
+	public void abrirImagem1() {
+		img1 = abreImagem(imageView1, img1);
 	}
 
 	@FXML
-	private void abreImage2() {
-		img2 = abreImage(imageView2, img2);
+	public void abrirImagem2() {
+		img2 = abreImagem(imageView2, img2);
 	}
 
-	@FXML
-	private void atualizaImage3() {
+	private void atualizaImagem3() {
 		imageView3.setImage(img3);
-		imageView3.setFitHeight(img3.getHeight());
 		imageView3.setFitWidth(img3.getWidth());
+		imageView3.setFitHeight(img3.getHeight());
 	}
-	
-	@FXML
-	public void rasterImg(MouseEvent evt) {
-		ImageView iv = (ImageView) evt.getTarget();
-		if(iv.getImage() != null) {
-			verificaCor(iv.getImage(), (int) evt.getX(), (int) evt.getY());
-		}
-	}
-	
-	@FXML
-	public void converCinzaArietmetica() {
-		img3 = Pdi.cinzaMediaAritmetica(img1, 0, 0, 0);
-		atualizaImage3();
-	}
-	
-	@FXML
-	public void fazerLimiarizacao() {
-		double value;
-		
-		value = slidA.getValue() / 250;
-		img3 = Pdi.limiarizacao(img1, value);
-		
-		atualizaImage3();
-	}
-	
-	@FXML
-	public void fazerNegativa() {
-		img3 = Pdi.negativa(img1);
-		atualizaImage3();
-	}
-	
-	private void verificaCor(Image img, int x, int y){
-		try {
-			Color cor = img.getPixelReader().getColor(x-1, y-1);
-			labelR.setText("R: "+(int) (cor.getRed()*255));
-			labelG.setText("G: "+(int) (cor.getGreen()*255));
-			labelB.setText("B: "+(int) (cor.getBlue()*255));
-		} catch (Exception e) {
-			//e.printStackTrace();
-		}
-	}
-	
-	private Image abreImage(ImageView imageView, Image image) {
 
-		File file;
-		
-		file = selecionaImagem();
-		if(file != null) {
-			image = new Image(file.toURI().toString());
+	@FXML
+	public void CinzaAritmetica() {
+		img3 = Pdi.cinzaMediaAritmetica(img1, 0, 0, 0);
+		atualizaImagem3();
+	}
+
+	@FXML
+	public void cinzaPonderada() {
+		int pR, pG, pB;
+		pR = Integer.parseInt(textFieldR.getText().toString()) / 3;
+		pG = Integer.parseInt(textFieldG.getText().toString()) / 3;
+		pB = Integer.parseInt(textFieldB.getText().toString()) / 3;
+
+		img3 = Pdi.cinzaMediaAritmetica(img1, pR, pG, pB);
+		atualizaImagem3();
+	}
+
+	@FXML
+	public void Limiarizacao() {
+
+		double value = sliderLimiar.getValue() / 250;
+		img3 = Pdi.limiarizacao(img1, value);
+		atualizaImagem3();
+	}
+
+	@FXML
+	public void valorLimiar() {
+		Double valor = sliderLimiar.getValue();
+		labelValorLimiar.setText(valor.toString());
+	}
+
+	@FXML
+	public void limiarizarImagem() {
+		img3 = Pdi.limiarizacao(img1, sliderLimiar.getValue());
+		atualizaImagem3();
+	}
+
+	@FXML
+	public void negativa() {
+		img3 = Pdi.negativa(img1);
+		atualizaImagem3();
+	}
+
+	private Image abreImagem(ImageView imageView, Image image) {
+		File f = selecionaImagem();
+		if (f != null) {
+			image = new Image(f.toURI().toString());
 			imageView.setImage(image);
 			imageView.setFitWidth(image.getWidth());
 			imageView.setFitHeight(image.getHeight());
 			return image;
 		}
-		
 		return null;
 	}
 
 	private File selecionaImagem() {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.getExtensionFilters().add(
-				new FileChooser.ExtensionFilter(
-						"Imagens", "*.jpg", "*.JPG", "*.png",
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagens", "*.jpg", "*.JPG", "*.png",
 				"*.PNG", "*.gif", "*.GIF", "*.bmp", "*.BMP"));
-		
+
 		fileChooser.setInitialDirectory(new File("C:\\Users\\CPP\\Pictures\\img"));
-		
+
 		File imgSelec = fileChooser.showOpenDialog(null);
 		try {
 			if (imgSelec != null) {
@@ -121,5 +123,24 @@ public class PrincipalController {
 		}
 		return null;
 	}
-	
+
+	private void verificaCor(Image img, int x, int y) {
+		try {
+			Color cor = img.getPixelReader().getColor(x - 1, y - 1);
+			labelR.setText("R: " + (int) (cor.getRed() * 255));
+			labelG.setText("G: " + (int) (cor.getGreen() * 255));
+			labelB.setText("B: " + (int) (cor.getBlue() * 255));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void rasterImg(MouseEvent evt) {
+		ImageView iv = (ImageView) evt.getTarget();
+		if (iv.getImage() != null) {
+			verificaCor(iv.getImage(), (int) evt.getX(), (int) evt.getY());
+		}
+	}
+
 }
