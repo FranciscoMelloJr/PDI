@@ -14,19 +14,35 @@ import javafx.stage.FileChooser;
 
 public class PrincipalController {
 
-	@FXML ImageView imageView1;
-	@FXML ImageView imageView2;
-	@FXML ImageView imageView3;
+	@FXML
+	ImageView imageView1;
+	@FXML
+	ImageView imageView2;
+	@FXML
+	ImageView imageView3;
 
-	@FXML Label labelR;
-	@FXML Label labelG;
-	@FXML Label labelB;
+	@FXML
+	Label labelR;
+	@FXML
+	Label labelG;
+	@FXML
+	Label labelB;
 
-	@FXML TextField textFieldR;
-	@FXML TextField textFieldG;
-	@FXML TextField textFieldB;
+	@FXML
+	TextField textFieldR;
+	@FXML
+	TextField textFieldG;
+	@FXML
+	TextField textFieldB;
 
-	@FXML Slider sliderLimiar;
+	@FXML
+	Slider sliderLimiar;
+	@FXML
+	Slider sliderR;
+	@FXML
+	Slider sliderG;
+	@FXML
+	Slider sliderB;
 
 	private Image img1;
 	private Image img2;
@@ -60,10 +76,9 @@ public class PrincipalController {
 	@FXML
 	public void cinzaPonderada() {
 		int pR, pG, pB;
-		pR = Integer.parseInt(textFieldR.getText().toString()) / 3;
-		pG = Integer.parseInt(textFieldG.getText().toString()) / 3;
-		pB = Integer.parseInt(textFieldB.getText().toString()) / 3;
-
+		pR = (int) (sliderR.getValue() / 3);
+		pG = (int) (sliderG.getValue() / 3);
+		pB = (int) (sliderB.getValue() / 3);
 		img3 = Pdi.cinzaMediaAritmetica(img1, pR, pG, pB);
 		atualizaImagem3();
 	}
