@@ -5,7 +5,6 @@ import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,13 +26,6 @@ public class PrincipalController {
 	Label labelG;
 	@FXML
 	Label labelB;
-
-	@FXML
-	TextField textFieldR;
-	@FXML
-	TextField textFieldG;
-	@FXML
-	TextField textFieldB;
 
 	@FXML
 	Slider sliderLimiar;
@@ -92,12 +84,6 @@ public class PrincipalController {
 	}
 
 	@FXML
-	public void valorLimiar() {
-		Double valor = sliderLimiar.getValue();
-		labelValorLimiar.setText(valor.toString());
-	}
-
-	@FXML
 	public void limiarizarImagem() {
 		img3 = Pdi.limiarizacao(img1, sliderLimiar.getValue());
 		atualizaImagem3();
@@ -126,7 +112,7 @@ public class PrincipalController {
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagens", "*.jpg", "*.JPG", "*.png",
 				"*.PNG", "*.gif", "*.GIF", "*.bmp", "*.BMP"));
 
-		fileChooser.setInitialDirectory(new File("C:\\Users\\CPP\\Pictures\\img"));
+		fileChooser.setInitialDirectory(new File("C:\\Users\\Franc\\OneDrive - UNISUL\\8º Semestre\\Processamento Digital de Imagens\\imgs"));
 
 		File imgSelec = fileChooser.showOpenDialog(null);
 		try {

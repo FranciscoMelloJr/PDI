@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="571.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.PrincipalController">
+   <children>
+      <BorderPane prefHeight="571.0" prefWidth="794.0" AnchorPane.leftAnchor="0.0">
+         <top>
+            <HBox prefHeight="99.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="40.0" right="20.0" top="30.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../../../imgs/pdi-logo.jpg" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="160.0" prefWidth="635.0">
+                     <children>
+                        <HBox prefHeight="65.0" prefWidth="502.0">
+                           <children>
+                              <Label fx:id="labelR" prefHeight="45.0" prefWidth="70.0" text="R" textFill="RED">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="labelG" prefHeight="45.0" prefWidth="70.0" text="G" textFill="#00ff55">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="labelB" prefHeight="60.0" prefWidth="70.0" text="B" textFill="#006fff">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#abreHistograma" prefHeight="30.0" prefWidth="135.0" text="     Histograma">
+                                 <HBox.margin>
+                                    <Insets left="60.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../imgs/iconhisto.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="75.0" prefWidth="635.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#abrirImagem1" prefHeight="42.0" prefWidth="136.0" text="   Abrir img 1">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../imgs/iconabrirpasta.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#abrirImagem2" prefHeight="30.0" prefWidth="135.0" text="   Abrir img2">
+                                 <HBox.margin>
+                                    <Insets left="60.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../imgs/iconabrirpasta.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#salvarImagem" prefHeight="30.0" prefWidth="135.0" text="        Salvar">
+                                 <HBox.margin>
+                                    <Insets left="55.0" right="10.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../imgs/iconsalvar.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="25.0" top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+         <left>
+            <VBox prefHeight="409.0" prefWidth="216.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Accordion prefHeight="421.0" prefWidth="216.0">
+                    <panes>
+                      <TitledPane animated="false" prefHeight="25.0" prefWidth="171.0" text="Tons de cinza">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="270.0" prefWidth="214.0">
+                                 <children>
+                                    <AnchorPane prefHeight="234.0" prefWidth="215.0">
+                                       <children>
+                                          <Button layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#cinzaA" text="Média Aritmética" />
+                                          <TextField fx:id="textFieldR" layoutX="47.0" layoutY="60.0" prefHeight="20.0" prefWidth="40.0" />
+                                          <TextField fx:id="textFieldG" layoutX="47.0" layoutY="101.0" prefHeight="20.0" prefWidth="40.0" />
+                                          <Label layoutX="20.0" layoutY="64.0" text="\%R" textFill="RED" />
+                                          <Label layoutX="19.0" layoutY="105.0" text="\%G" textFill="#00ff51" />
+                                          <Label layoutX="20.0" layoutY="149.0" text="\%B" textFill="#003cff" />
+                                          <Button layoutX="19.0" layoutY="190.0" mnemonicParsing="false" onAction="#cinzaP" text="Média Ponderada" />
+                                          <TextField fx:id="textFieldB" layoutX="47.0" layoutY="145.0" prefHeight="20.0" prefWidth="40.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children></AnchorPane>
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="Limiarização">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <AnchorPane prefHeight="335.0" prefWidth="214.0">
+                                       <children>
+                                          <Slider fx:id="limiarizacaoSlider" layoutX="32.0" layoutY="33.0" prefHeight="14.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" value="50.0" />
+                                          <Button fx:id="limiarizarB" layoutX="51.0" layoutY="83.0" mnemonicParsing="false" onAction="#limiarizarImagem" text="Limiarizar imagem" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children></AnchorPane>
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="Negativa">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <AnchorPane layoutX="-1.0" prefHeight="335.0" prefWidth="216.0">
+                                       <children>
+                                          <Button layoutX="57.0" layoutY="38.0" mnemonicParsing="false" onAction="#aplicarNegativa" text="Aplicar Negativa" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children></AnchorPane>
+                        </content>
+                      </TitledPane>
+                        <TitledPane animated="false" text="Ruídos">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <RadioButton fx:id="rbVizC" layoutX="23.0" layoutY="20.0" mnemonicParsing="false" selected="true" text="Vizinhos Cruz">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="grupoRB" />
+                                       </toggleGroup></RadioButton>
+                                    <RadioButton fx:id="rbVizX" layoutX="23.0" layoutY="56.0" mnemonicParsing="false" text="Vizinhos X" toggleGroup="$grupoRB" />
+                                    <RadioButton fx:id="rbViz3" layoutX="23.0" layoutY="94.0" mnemonicParsing="false" text="Vizinhos 3x3" toggleGroup="$grupoRB" />
+                                    <Button layoutX="64.0" layoutY="135.0" mnemonicParsing="false" onAction="#eliminarRuidos" text="Eliminar ruídos" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <TitledPane animated="false" text="Adição">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Slider fx:id="slider1" layoutX="37.0" layoutY="44.0" showTickLabels="true" showTickMarks="true" value="50.0" />
+                                    <Slider fx:id="slider2" layoutX="37.0" layoutY="142.0" showTickLabels="true" showTickMarks="true" value="50.0" />
+                                    <Label layoutX="37.0" layoutY="14.0" text="\% Imagem 1" />
+                                    <Label layoutX="37.0" layoutY="114.0" text="\% Imagem 2" />
+                                    <Button fx:id="butAd" layoutX="37.0" layoutY="195.0" mnemonicParsing="false" onAction="#aplicarAdicao" text="Adição" />
+                                    <Button fx:id="butSub" layoutX="36.0" layoutY="236.0" mnemonicParsing="false" onAction="#aplicarSubtracao" text="Subtração" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                    </panes>
+                  </Accordion>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
+            </VBox>
+         </left>
+         <center>
+            <HBox prefHeight="409.0" prefWidth="583.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="400.0" prefWidth="194.0">
+                     <children>
+                        <ScrollPane prefHeight="421.0" prefWidth="160.0">
+                           <content>
+                              <ImageView fx:id="imageview1" fitHeight="405.0" fitWidth="193.0" onMouseMoved="#rasterImg" pickOnBounds="true" preserveRatio="true" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="400.0" prefWidth="194.0">
+                     <children>
+                        <ScrollPane prefHeight="421.0" prefWidth="193.0">
+                           <content>
+                              <ImageView fx:id="imageview2" fitHeight="417.0" fitWidth="182.0" onMouseMoved="#rasterImg" pickOnBounds="true" preserveRatio="true" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="400.0" prefWidth="194.0">
+                     <children>
+                        <ScrollPane prefHeight="421.0" prefWidth="193.0">
+                           <content>
+                              <ImageView fx:id="imageview3" fitHeight="405.0" fitWidth="191.0" onMouseMoved="#rasterImg" pickOnBounds="true" preserveRatio="true" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
+            </HBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
