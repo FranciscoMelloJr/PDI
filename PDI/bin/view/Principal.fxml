@@ -22,11 +22,11 @@
          <top>
             <HBox BorderPane.alignment="CENTER">
                <children>
-                  <Pane prefHeight="165.0" prefWidth="140.0">
+                  <Pane>
                      <children>
-                        <ImageView fitHeight="166.0" fitWidth="138.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="170.0" fitWidth="170.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../OneDrive%20-%20UNISUL/8º%20Semestre/Processamento%20Digital%20de%20Imagens/imgs%20layout/Logo%20PDI.png" />
+                              <Image url="@../../../../../../OneDrive%20-%20UNISUL/8º%20Semestre/Processamento%20Digital%20de%20Imagens/imgs%20layout/LogoPDI.PNG" />
                            </image>
                         </ImageView>
                      </children>
@@ -35,24 +35,33 @@
                      <children>
                         <HBox prefHeight="140.0">
                            <children>
-                              <Label fx:id="labelR" prefHeight="130.0" prefWidth="140.0" text="RED: 255" textFill="RED">
+                              <Label fx:id="labelR" prefHeight="130.0" prefWidth="140.0" text="RED:" textFill="RED">
                                  <font>
-                                    <Font name="ROGFonts-Regular" size="24.0" />
+                                    <Font name="ROGFonts-Regular" size="22.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets left="25.0" top="20.0" />
+                                 </HBox.margin>
                               </Label>
-                              <Label fx:id="labelG" prefHeight="130.0" prefWidth="190.0" text="GREEN: 255" textFill="LIME">
+                              <Label fx:id="labelG" prefHeight="130.0" prefWidth="190.0" text="GREEN:" textFill="LIME">
                                  <font>
-                                    <Font name="ROGFonts-Regular" size="24.0" />
+                                    <Font name="ROGFonts-Regular" size="22.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets top="20.0" />
+                                 </HBox.margin>
                               </Label>
-                              <Label fx:id="labelB" prefHeight="130.0" prefWidth="160.0" text="BLUE: 255" textFill="BLUE">
+                              <Label fx:id="labelB" prefHeight="130.0" prefWidth="160.0" text="BLUE:" textFill="BLUE">
                                  <font>
-                                    <Font name="ROGFonts-Regular" size="24.0" />
+                                    <Font name="ROGFonts-Regular" size="22.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets top="20.0" />
+                                 </HBox.margin>
                               </Label>
                               <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="119.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: black;" text="HIstograma">
                                  <font>
-                                    <Font name="ROGFonts-Regular" size="12.0" />
+                                    <Font name="ROGFonts-Regular" size="10.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets bottom="80.0" right="5.0" top="10.0" />
@@ -171,9 +180,9 @@
                                           <Insets left="10.0" right="10.0" top="10.0" />
                                        </VBox.margin>
                                     </Slider>
-                                    <Button mnemonicParsing="false" onAction="#Limiarizacao" prefWidth="100.0" style="-fx-border-color: gray; -fx-background-radius: 25; -fx-border-radius: 25;" text="Aplicar">
+                                    <Button mnemonicParsing="false" onAction="#Limiarizacao" prefWidth="150.0" style="-fx-border-color: gray; -fx-background-radius: 25; -fx-border-radius: 25;" text="Aplicar Limiarização">
                                        <VBox.margin>
-                                          <Insets left="30.0" top="5.0" />
+                                          <Insets left="5.0" top="15.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>
@@ -190,7 +199,7 @@
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#negativa" style="-fx-border-color: gray; -fx-background-radius: 25; -fx-border-radius: 25;" text="Aplicar Negativa">
                                        <VBox.margin>
-                                          <Insets left="15.0" top="5.0" />
+                                          <Insets left="25.0" top="15.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>
@@ -199,12 +208,12 @@
                         </AnchorPane>
                   </content>
                 </TitledPane>
-                  <TitledPane animated="false" text="Ruídos">
+                  <TitledPane animated="false" text="???">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                   </TitledPane>
-                  <TitledPane animated="false" text="Adição / Subtração">
+                  <TitledPane animated="false" text="???">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="159.0" prefWidth="163.0" />
                     </content>
@@ -229,7 +238,7 @@
                     <content>
                       <AnchorPane>
                            <children>
-                              <ImageView fx:id="imageView1" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ImageView fx:id="imageView1" fitHeight="185.0" fitWidth="185.0" onMouseMoved="#rasterImg" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -238,7 +247,7 @@
                     <content>
                       <AnchorPane>
                            <children>
-                              <ImageView fx:id="imageView2" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ImageView fx:id="imageView2" fitHeight="185.0" fitWidth="185.0" onMouseMoved="#rasterImg" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -247,7 +256,7 @@
                     <content>
                       <AnchorPane>
                            <children>
-                              <ImageView fx:id="imageView3" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ImageView fx:id="imageView3" fitHeight="185.0" fitWidth="185.0" onMouseMoved="#rasterImg" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                     </content>

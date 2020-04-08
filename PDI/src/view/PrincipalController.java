@@ -95,6 +95,25 @@ public class PrincipalController {
 		atualizaImagem3();
 	}
 
+	@FXML
+	public void rasterImg(MouseEvent evt) {
+		ImageView iv = (ImageView) evt.getTarget();
+		if (iv.getImage() != null) {
+			verificaCor(iv.getImage(), (int) evt.getX(), (int) evt.getY());
+		}
+	}
+
+	private void verificaCor(Image img, int x, int y) {
+		try {
+			Color cor = img.getPixelReader().getColor(x - 1, y - 1);
+			labelR.setText("RED: " + (int) (cor.getRed() * 255));
+			labelG.setText("GREEN: " + (int) (cor.getGreen() * 255));
+			labelB.setText("BLUE: " + (int) (cor.getBlue() * 255));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private Image abreImagem(ImageView imageView, Image image) {
 		File f = selecionaImagem();
 		if (f != null) {
@@ -112,7 +131,8 @@ public class PrincipalController {
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagens", "*.jpg", "*.JPG", "*.png",
 				"*.PNG", "*.gif", "*.GIF", "*.bmp", "*.BMP"));
 
-		fileChooser.setInitialDirectory(new File("C:\\Users\\Franc\\OneDrive - UNISUL\\8º Semestre\\Processamento Digital de Imagens\\imgs"));
+		fileChooser.setInitialDirectory(
+				new File("C:\\Users\\Franc\\OneDrive - UNISUL\\8º Semestre\\Processamento Digital de Imagens\\imgs"));
 
 		File imgSelec = fileChooser.showOpenDialog(null);
 		try {
@@ -123,25 +143,6 @@ public class PrincipalController {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	private void verificaCor(Image img, int x, int y) {
-		try {
-			Color cor = img.getPixelReader().getColor(x - 1, y - 1);
-			labelR.setText("R: " + (int) (cor.getRed() * 255));
-			labelG.setText("G: " + (int) (cor.getGreen() * 255));
-			labelB.setText("B: " + (int) (cor.getBlue() * 255));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@FXML
-	public void rasterImg(MouseEvent evt) {
-		ImageView iv = (ImageView) evt.getTarget();
-		if (iv.getImage() != null) {
-			verificaCor(iv.getImage(), (int) evt.getX(), (int) evt.getY());
-		}
 	}
 
 }
