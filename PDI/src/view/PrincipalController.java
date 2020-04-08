@@ -173,7 +173,8 @@ public class PrincipalController {
 
 			if (file != null) {
 				BufferedImage bImg = SwingFXUtils.fromFXImage(img3, null);
-
+//				fileChooser.setInitialDirectory(new File(
+//						"C:/Users/Franc/OneDrive - UNISUL/8º Semestre/Processamento Digital de Imagens/Resultados de Imagens"));
 				try {
 					ImageIO.write(bImg, "PNG", file);
 
