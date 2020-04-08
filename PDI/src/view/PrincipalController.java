@@ -44,38 +44,6 @@ public class PrincipalController {
 	private Label labelValorLimiar;
 
 	@FXML
-	public void abrirImagem1() {
-		img1 = abreImagem(imageView1, img1);
-	}
-
-	@FXML
-	public void abrirImagem2() {
-		img2 = abreImagem(imageView2, img2);
-	}
-
-	private void atualizaImagem3() {
-		imageView3.setImage(img3);
-		imageView3.setFitWidth(img3.getWidth());
-		imageView3.setFitHeight(img3.getHeight());
-	}
-
-	@FXML
-	public void CinzaAritmetica() {
-		img3 = Pdi.cinzaMediaAritmetica(img1, 0, 0, 0);
-		atualizaImagem3();
-	}
-
-	@FXML
-	public void cinzaPonderada() {
-		int pR, pG, pB;
-		pR = (int) (sliderR.getValue() / 3);
-		pG = (int) (sliderG.getValue() / 3);
-		pB = (int) (sliderB.getValue() / 3);
-		img3 = Pdi.cinzaMediaAritmetica(img1, pR, pG, pB);
-		atualizaImagem3();
-	}
-
-	@FXML
 	public void Limiarizacao() {
 
 		double value = sliderLimiar.getValue() / 250;
@@ -96,6 +64,22 @@ public class PrincipalController {
 	}
 
 	@FXML
+	public void cinzaPonderada() {
+		int pR, pG, pB;
+		pR = (int) (sliderR.getValue() / 3);
+		pG = (int) (sliderG.getValue() / 3);
+		pB = (int) (sliderB.getValue() / 3);
+		img3 = Pdi.cinzaMediaAritmetica(img1, pR, pG, pB);
+		atualizaImagem3();
+	}
+
+	@FXML
+	public void CinzaAritmetica() {
+		img3 = Pdi.cinzaMediaAritmetica(img1, 0, 0, 0);
+		atualizaImagem3();
+	}
+
+	@FXML
 	public void rasterImg(MouseEvent evt) {
 		ImageView iv = (ImageView) evt.getTarget();
 		if (iv.getImage() != null) {
@@ -112,6 +96,22 @@ public class PrincipalController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@FXML
+	public void abrirImagem1() {
+		img1 = abreImagem(imageView1, img1);
+	}
+
+	@FXML
+	public void abrirImagem2() {
+		img2 = abreImagem(imageView2, img2);
+	}
+
+	private void atualizaImagem3() {
+		imageView3.setImage(img3);
+		imageView3.setFitWidth(img3.getWidth());
+		imageView3.setFitHeight(img3.getHeight());
 	}
 
 	private Image abreImagem(ImageView imageView, Image image) {
