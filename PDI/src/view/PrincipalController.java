@@ -20,43 +20,62 @@ import javafx.stage.FileChooser;
 public class PrincipalController {
 
 	@FXML
-	ImageView imageView1;
-	@FXML
-	ImageView imageView2;
-	@FXML
-	ImageView imageView3;
+	ImageView imageView1, imageView2, imageView3;
 
 	@FXML
-	Label labelR;
-	@FXML
-	Label labelG;
-	@FXML
-	Label labelB;
+	Label labelR, labelG, labelB;
 
 	@FXML
-	Slider sliderLimiar;
-	@FXML
-	Slider sliderR;
-	@FXML
-	Slider sliderG;
-	@FXML
-	Slider sliderB;
+	Slider sliderLimiar, sliderR, sliderG, sliderB;
 
 	@FXML
-	RadioButton vizinhoC;
-	@FXML
-	RadioButton vizinhoX;
-	@FXML
-	RadioButton vizinho3;
+	RadioButton vizinhoC, vizinhoX, vizinho3;
 
 	@FXML
-	private Slider sliderIMG1;
-	@FXML
-	private Slider sliderIMG2;
+	private Slider sliderIMG1, sliderIMG2;
 
-	private Image img1;
-	private Image img2;
-	private Image img3;
+	private Image img1, img2, img3;
+
+	int x1, y1, x2, y2;
+
+	@FXML
+	public void mouseClick(MouseEvent event) {
+		ImageView img = (ImageView) event.getTarget();
+		if (img.getImage() != null) {
+			x1 = (int) event.getX();
+			y1 = (int) event.getY();
+		}
+	}
+
+	@FXML
+	public void mouseUnclick(MouseEvent event) {
+		ImageView img = (ImageView) event.getTarget();
+		if (img.getImage() != null) {
+			x2 = (int) event.getX();
+			y2 = (int) event.getY();
+			Image imgX = img.getImage();
+			// MARCAÇÕES FIXAS EM CADA IMAGEM
+//			img.setImage(
+//			Pdi.marcarImagem(imgX, Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2),
+//			Math.max(y1, y2)));
+//		}
+
+			// MARCAÇÕES SEPARADAS EM CADA IMAGEM
+			// Devido comparação com getWidth, imagens de mesmo tamanho podem ser substituídas
+			if (imgX.getWidth() == img1.getWidth()) {
+				img.setImage(
+						Pdi.marcarImagem(img1, Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2), Math.max(y1, y2)));
+			}
+			if (imgX.getWidth() == img2.getWidth()) {
+				img.setImage(
+						Pdi.marcarImagem(img2, Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2), Math.max(y1, y2)));
+			}
+			if (imgX.getWidth() == img3.getWidth()) {
+				img.setImage(
+						Pdi.marcarImagem(img3, Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2), Math.max(y1, y2)));
+			}
+		}
+	}
 
 	@FXML
 	public void aplicarAdicao() {
@@ -95,7 +114,6 @@ public class PrincipalController {
 	@FXML
 	public void limiarizar() {
 		img3 = Pdi.limiarizacao(img1, sliderLimiar.getValue() / 100);
-		System.out.println(sliderLimiar.getValue());
 		atualizaImagem3();
 	}
 

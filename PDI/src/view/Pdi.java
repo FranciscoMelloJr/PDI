@@ -340,4 +340,42 @@ public class Pdi {
 		return wi;
 	}
 
+	public static Image marcarImagem(Image img, int minX, int minY, int maxX, int maxY) {
+
+		int w = (int) img.getWidth();
+		int h = (int) img.getHeight();
+
+		PixelReader pr = img.getPixelReader();
+		WritableImage wi = new WritableImage(w, h);
+		PixelWriter pw = wi.getPixelWriter();
+
+		Color newCor = new Color(0, 0, 1, 1);
+
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
+				pw.setColor(i, j, pr.getColor(i, j));
+			}
+		}
+
+		// LINHA X
+		for (int x = minX; x <= maxX; x++) {
+			pw.setColor(x, minY, newCor);
+			pw.setColor(x, minY - 1, newCor);
+			pw.setColor(x, minY + 1, newCor);
+			pw.setColor(x, maxY, newCor);
+			pw.setColor(x, maxY - 1, newCor);
+			pw.setColor(x, maxY + 1, newCor);
+		}
+		// LINHA Y
+		for (int y = minY; y <= maxY; y++) {
+			pw.setColor(minX, y, newCor);
+			pw.setColor(minX - 1, y, newCor);
+			pw.setColor(minX + 1, y, newCor);
+			pw.setColor(maxX, y, newCor);
+			pw.setColor(maxX - 1, y, newCor);
+			pw.setColor(maxX + 1, y, newCor);
+		}
+
+		return wi;
+	}
 }
