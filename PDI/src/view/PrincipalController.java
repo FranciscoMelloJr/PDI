@@ -1,9 +1,15 @@
 package view;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,12 +42,32 @@ public class PrincipalController {
 	@FXML
 	Slider sliderB;
 
+	@FXML
+	RadioButton vizinhoC;
+	@FXML
+	RadioButton vizinhoX;
+	@FXML
+	RadioButton vizinho3;
+
 	private Image img1;
 	private Image img2;
 	private Image img3;
 
 	@FXML
-	private Label labelValorLimiar;
+	public void eliminarRuidos() {
+
+		int op = 3;
+
+		if (vizinho3.isSelected())
+			op = 1;
+		if (vizinhoC.isSelected())
+			op = 2;
+		if (vizinhoX.isSelected())
+			op = 3;
+
+		img3 = Pdi.ruidos(img1, op);
+		atualizaImagem3();
+	}
 
 	@FXML
 	public void negativa() {
@@ -137,4 +163,26 @@ public class PrincipalController {
 		}
 		return null;
 	}
+
+	@FXML
+	public void salvarImagem() {
+		if (img3 != null) {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagem", "*.png"));
+			File file = fileChooser.showSaveDialog(null);
+
+			if (file != null) {
+				BufferedImage bImg = SwingFXUtils.fromFXImage(img3, null);
+
+				try {
+					ImageIO.write(bImg, "PNG", file);
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+
 }
