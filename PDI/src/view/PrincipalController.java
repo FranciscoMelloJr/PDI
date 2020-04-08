@@ -44,22 +44,15 @@ public class PrincipalController {
 	private Label labelValorLimiar;
 
 	@FXML
-	public void Limiarizacao() {
-
-		double value = sliderLimiar.getValue() / 250;
-		img3 = Pdi.limiarizacao(img1, value);
-		atualizaImagem3();
-	}
-
-	@FXML
-	public void limiarizarImagem() {
-		img3 = Pdi.limiarizacao(img1, sliderLimiar.getValue());
-		atualizaImagem3();
-	}
-
-	@FXML
 	public void negativa() {
 		img3 = Pdi.negativa(img1);
+		atualizaImagem3();
+	}
+
+	@FXML
+	public void limiarizar() {
+		img3 = Pdi.limiarizacao(img1, sliderLimiar.getValue() / 100);
+		System.out.println(sliderLimiar.getValue());
 		atualizaImagem3();
 	}
 
