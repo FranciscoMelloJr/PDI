@@ -49,9 +49,26 @@ public class PrincipalController {
 	@FXML
 	RadioButton vizinho3;
 
+	@FXML
+	private Slider sliderIMG1;
+	@FXML
+	private Slider sliderIMG2;
+
 	private Image img1;
 	private Image img2;
 	private Image img3;
+
+	@FXML
+	public void aplicarAdicao() {
+		img3 = Pdi.adicao(img1, img2, sliderIMG1.getValue() / 100, sliderIMG2.getValue() / 100);
+		atualizaImagem3();
+	}
+
+	@FXML
+	public void aplicarSubtracao() {
+		img3 = Pdi.subtracao(img1, img2);
+		atualizaImagem3();
+	}
 
 	@FXML
 	public void eliminarRuidos() {

@@ -250,9 +250,45 @@
                            </children></AnchorPane>
                     </content>
                   </TitledPane>
-                  <TitledPane animated="false" text="???">
+                  <TitledPane animated="false" text="Adição / Subtração">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="159.0" prefWidth="163.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label text="\% Imagem 1">
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Slider fx:id="sliderIMG1" showTickLabels="true" showTickMarks="true">
+                                       <VBox.margin>
+                                          <Insets left="25.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Slider>
+                                    <Label text="\% Imagem 2">
+                                       <VBox.margin>
+                                          <Insets left="50.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Slider fx:id="sliderIMG2" showTickLabels="true" showTickMarks="true">
+                                       <VBox.margin>
+                                          <Insets left="25.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Slider>
+                                    <Button mnemonicParsing="false" onAction="#aplicarAdicao" style="-fx-border-color: gray; -fx-background-radius: 25; -fx-border-radius: 25;" text="Adição">
+                                       <VBox.margin>
+                                          <Insets left="60.0" top="15.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#aplicarSubtracao" style="-fx-border-color: gray; -fx-background-radius: 25; -fx-border-radius: 25;" text="Subtração">
+                                       <VBox.margin>
+                                          <Insets left="51.0" top="15.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
                     </content>
                   </TitledPane>
                   <TitledPane animated="false" text="???">
