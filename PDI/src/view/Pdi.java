@@ -277,8 +277,8 @@ public class Pdi {
 
 		PixelWriter pw = wi.getPixelWriter();
 
-		for (int i = 1; i < w; i++) {
-			for (int j = 1; j < h; j++) {
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
 
 				Color corImagem1 = pr1.getColor(i, j);
 				Color corImagem2 = pr2.getColor(i, j);
@@ -317,8 +317,8 @@ public class Pdi {
 
 		PixelWriter pw = wi.getPixelWriter();
 
-		for (int i = 1; i < w; i++) {
-			for (int j = 1; j < h; j++) {
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
 
 				Color oldCor1 = pr1.getColor(i, j);
 				Color oldCor2 = pr2.getColor(i, j);
