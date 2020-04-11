@@ -61,7 +61,7 @@
                                     <Insets top="20.0" />
                                  </HBox.margin>
                               </Label>
-                              <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="119.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: black;" text="HIstograma">
+                              <Button mnemonicParsing="false" onAction="#abreHistograma" prefHeight="38.0" prefWidth="119.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: black;" text="HIstograma">
                                  <font>
                                     <Font name="ROGFonts-Regular" size="10.0" />
                                  </font>
@@ -123,11 +123,11 @@
                   <content>
                     <AnchorPane>
                            <children>
-                              <VBox>
+                              <VBox prefWidth="170.0">
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#CinzaAritmetica" style="-fx-border-color: gray; -fx-background-radius: 25; -fx-border-radius: 25;" text="Média Aritmética">
                                        <VBox.margin>
-                                          <Insets left="30.0" top="10.0" />
+                                          <Insets left="40.0" top="10.0" />
                                        </VBox.margin>
                                     </Button>
                                     <Label prefHeight="25.0" prefWidth="75.0" text="\% Vermelho" textFill="RED">
@@ -137,11 +137,8 @@
                                     </Label>
                                     <Slider fx:id="sliderR" showTickLabels="true" showTickMarks="true">
                                        <VBox.margin>
-                                          <Insets />
+                                          <Insets left="20.0" />
                                        </VBox.margin>
-                                       <padding>
-                                          <Insets left="10.0" />
-                                       </padding>
                                     </Slider>
                                     <Label prefHeight="20.0" prefWidth="60.0" text="\% Verde" textFill="LIME">
                                        <VBox.margin>
@@ -150,7 +147,7 @@
                                     </Label>
                                     <Slider fx:id="sliderG" showTickLabels="true" showTickMarks="true">
                                        <VBox.margin>
-                                          <Insets left="10.0" />
+                                          <Insets left="20.0" />
                                        </VBox.margin>
                                     </Slider>
                                     <Label prefHeight="20.0" prefWidth="40.0" text="\% Azul" textFill="BLUE">
@@ -160,12 +157,12 @@
                                     </Label>
                                     <Slider fx:id="sliderB" showTickLabels="true" showTickMarks="true">
                                        <VBox.margin>
-                                          <Insets left="10.0" />
+                                          <Insets left="20.0" />
                                        </VBox.margin>
                                     </Slider>
                                     <Button mnemonicParsing="false" onAction="#cinzaPonderada" style="-fx-border-color: gray; -fx-background-radius: 25; -fx-border-radius: 25;" text="Média Ponderada">
                                        <VBox.margin>
-                                          <Insets left="30.0" top="10.0" />
+                                          <Insets left="40.0" top="10.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>
@@ -187,7 +184,7 @@
                                     </Slider>
                                     <Button mnemonicParsing="false" onAction="#limiarizar" style="-fx-border-color: gray; -fx-background-radius: 25; -fx-border-radius: 25;" text="Aplicar Limiarização">
                                        <VBox.margin>
-                                          <Insets left="25.0" top="15.0" />
+                                          <Insets left="30.0" top="15.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>
@@ -291,9 +288,20 @@
                            </children></AnchorPane>
                     </content>
                   </TitledPane>
-                  <TitledPane animated="false" text="???">
+                  <TitledPane animated="false" text="Equalizar Histograma">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Button mnemonicParsing="false" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Equalizar">
+                                       <VBox.margin>
+                                          <Insets left="60.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
                     </content>
                   </TitledPane>
                   <TitledPane animated="false" text="???">

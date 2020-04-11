@@ -7,7 +7,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
@@ -16,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class PrincipalController {
 
@@ -37,6 +43,31 @@ public class PrincipalController {
 	private Image img1, img2, img3;
 
 	int x1, y1, x2, y2;
+	
+	@FXML 
+	public void abreHistograma(ActionEvent event) {
+		try {
+			Stage stage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Histograma.fxml"));
+			Parent root = loader.load();
+			stage.setScene(new Scene(root));
+			stage.setTitle("Histograma");
+			//stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(((Node)event.getSource()).getScene().getWindow());
+			stage.show();
+			HistogramaController controller = (HistogramaController)loader.getController();
+			
+			if(img1!=null) 
+				Pdi.getGrafico(img1, controller.grafico1);
+			if(img2!=null)
+				Pdi.getGrafico(img2, controller.grafico2);
+			if(img3!=null)
+				Pdi.getGrafico(img3, controller.grafico3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	@FXML
 	public void mouseClick(MouseEvent event) {

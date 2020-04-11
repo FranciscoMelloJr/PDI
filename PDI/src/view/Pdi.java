@@ -2,6 +2,9 @@ package view;
 
 import java.util.Arrays;
 
+import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -378,4 +381,38 @@ public class Pdi {
 
 		return wi;
 	}
+	
+	private static int[] histogramaUnico(Image imagem) {
+		int[] qt = new int[256];
+		PixelReader pr = imagem.getPixelReader();
+		int w = (int)imagem.getWidth();
+		int h = (int)imagem.getHeight();
+		for(int i=0; i<w; i++) {
+			for(int j=0; j<h; j++) {
+				qt[(int)(pr.getColor(i,j).getRed()*255)]++;
+				qt[(int)(pr.getColor(i,j).getGreen()*255)]++;
+				qt[(int)(pr.getColor(i,j).getBlue()*255)]++;
+			}
+		}
+		return qt;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void getGrafico(Image imagem, BarChart<String, Number> grafico) {
+		
+	int [] hist = histogramaUnico(imagem);
+	
+	XYChart.Series vlr = new XYChart.Series();
+
+	for(int i=0; i<hist.length; i++) {
+		vlr.getData().add(new XYChart.Data(i+"", hist[i]));
+	}
+
+	grafico.getData().addAll(vlr);
+
+	for(Node n:grafico.lookupAll(".default-color0.chart-bar")) {
+		n.setStyle("-fx-bar-fill:blue;");
+	}
+}
+
 }
