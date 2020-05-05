@@ -43,15 +43,11 @@ public class PrincipalController {
 
 	@FXML
 	TextField colunas;
-	
+
 	private Image img1, img2, img3;
 
 	int x1, y1, x2, y2;
 
-	
-	
-
-	
 	@FXML
 	public void equalizacao() {
 		img3 = Pdi.equalizacaoHistograma(img1, true);
@@ -129,6 +125,37 @@ public class PrincipalController {
 	}
 
 	@FXML
+	public void mouseUnclickInvertido(MouseEvent event) {
+		ImageView img = (ImageView) event.getTarget();
+		if (img.getImage() != null) {
+			x2 = (int) event.getX();
+			y2 = (int) event.getY();
+			Image imgX = img.getImage();
+			// MARCAÇÕES FIXAS EM CADA IMAGEM
+//			img.setImage(
+//			Pdi.marcarImagem(imgX, Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2),
+//			Math.max(y1, y2)));
+//		}
+
+			// MARCAÇÕES SEPARADAS EM CADA IMAGEM
+			// Devido comparação com getWidth, imagens de mesmo tamanho podem ser
+			// substituídas
+			if (imgX.getWidth() == img1.getWidth()) {
+				img.setImage(Pdi.inverterImagem(img1, Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2),
+						Math.max(y1, y2)));
+			}
+			if (imgX.getWidth() == img2.getWidth()) {
+				img.setImage(Pdi.inverterImagem(img2, Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2),
+						Math.max(y1, y2)));
+			}
+			if (imgX.getWidth() == img3.getWidth()) {
+				img.setImage(Pdi.inverterImagem(img3, Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2),
+						Math.max(y1, y2)));
+			}
+		}
+	}
+
+	@FXML
 	public void aplicarAdicao() {
 		img3 = Pdi.adicao(img1, img2, sliderIMG1.getValue() / 100, sliderIMG2.getValue() / 100);
 		atualizaImagem3();
@@ -183,7 +210,7 @@ public class PrincipalController {
 		img3 = Pdi.cinzaMediaAritmetica(img1, 0, 0, 0);
 		atualizaImagem3();
 	}
-	
+
 	@FXML
 	public void zebrar() {
 		img3 = Pdi.cinzaMediaAritmeticaZebrada(img1, 0, 0, 0, Integer.parseInt(colunas.getText()));
