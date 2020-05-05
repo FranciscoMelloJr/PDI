@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -40,10 +41,17 @@ public class PrincipalController {
 	@FXML
 	private Slider sliderIMG1, sliderIMG2;
 
+	@FXML
+	TextField colunas;
+	
 	private Image img1, img2, img3;
 
 	int x1, y1, x2, y2;
 
+	
+	
+
+	
 	@FXML
 	public void equalizacao() {
 		img3 = Pdi.equalizacaoHistograma(img1, true);
@@ -173,6 +181,12 @@ public class PrincipalController {
 	@FXML
 	public void CinzaAritmetica() {
 		img3 = Pdi.cinzaMediaAritmetica(img1, 0, 0, 0);
+		atualizaImagem3();
+	}
+	
+	@FXML
+	public void zebrar() {
+		img3 = Pdi.cinzaMediaAritmeticaZebrada(img1, 0, 0, 0, Integer.parseInt(colunas.getText()));
 		atualizaImagem3();
 	}
 

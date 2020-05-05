@@ -13,6 +13,41 @@ import javafx.scene.paint.Color;
 
 public class Pdi {
 
+	public static Image cinzaMediaAritmeticaZebrada(Image imagem, int pcR, int pcG, int pcB, int colunas) {
+		try {
+			int w = (int) imagem.getWidth();
+			int h = (int) imagem.getHeight();
+
+			PixelReader pr = imagem.getPixelReader();
+			WritableImage wi = new WritableImage(w, h);
+			PixelWriter pw = wi.getPixelWriter();
+
+			int largura = w / colunas;
+			int esp = 0;
+
+			for (int x = 0; x < colunas / 2; x++) {
+
+				for (int i = esp; i < esp + largura; i++) {
+					for (int j = 0; j < h; j++) {
+						Color corA = pr.getColor(i, j);
+						double media = (corA.getRed() + corA.getGreen() + corA.getBlue()) / 3;
+						if (pcR != 0 || pcG != 0 || pcB != 0)
+							media = (corA.getRed() * pcR + corA.getGreen() * pcG + corA.getBlue() * pcB) / 100;
+						Color corN = new Color(media, media, media, corA.getOpacity());
+						pw.setColor(i, j, corN);
+					}
+				}
+				esp = esp + largura;
+				System.out.println(esp + " " );
+			}
+			return wi;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
 	public static Image cinzaMediaAritmetica(Image imagem, int pcR, int pcG, int pcB) {
 		try {
 			int w = (int) imagem.getWidth();

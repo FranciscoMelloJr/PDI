@@ -7,6 +7,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
@@ -309,9 +310,37 @@
                            </children></AnchorPane>
                     </content>
                   </TitledPane>
-                  <TitledPane animated="false" text="???">
+                  <TitledPane animated="false" text="Prova 1">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Efeito Zebrado">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="colunas" prefHeight="25.0" prefWidth="30.0" text="1">
+                                             <HBox.margin>
+                                                <Insets left="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Button mnemonicParsing="false" onAction="#zebrar" prefHeight="25.0" prefWidth="60.0" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="OK">
+                                             <HBox.margin>
+                                                <Insets left="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
                     </content>
                   </TitledPane>
               </panes>
