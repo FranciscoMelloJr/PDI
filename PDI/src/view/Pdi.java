@@ -25,8 +25,7 @@ public class Pdi {
 			int largura = w / colunas;
 			int esp = 0;
 
-			for (int x = 0; x < colunas / 2; x++) {
-
+			while (esp <= (w - largura)) {
 				for (int i = esp; i < esp + largura; i++) {
 					for (int j = 0; j < h; j++) {
 						Color corA = pr.getColor(i, j);
@@ -37,15 +36,21 @@ public class Pdi {
 						pw.setColor(i, j, corN);
 					}
 				}
-				esp = esp + largura;
-				System.out.println(esp + " " );
+				esp += largura;
+				for (int i = esp; i < esp + largura; i++) {
+					for (int j = 0; j < h; j++) {
+						Color corA = pr.getColor(i, j);
+						Color corN = new Color(corA.getRed(), corA.getGreen(), corA.getBlue(), corA.getOpacity());
+						pw.setColor(i, j, corN);
+					}
+				}
+				esp += largura;
 			}
 			return wi;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 
 	public static Image cinzaMediaAritmetica(Image imagem, int pcR, int pcG, int pcB) {
