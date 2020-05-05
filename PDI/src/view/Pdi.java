@@ -381,38 +381,184 @@ public class Pdi {
 
 		return wi;
 	}
-	
-	private static int[] histogramaUnico(Image imagem) {
-		int[] qt = new int[256];
+
+//	private static int[] histogramaUnico(Image imagem) {
+//		int[] qt = new int[256];
+//		PixelReader pr = imagem.getPixelReader();
+//		int w = (int) imagem.getWidth();
+//		int h = (int) imagem.getHeight();
+//		for (int i = 0; i < w; i++) {
+//			for (int j = 0; j < h; j++) {
+//				qt[(int) (pr.getColor(i, j).getRed() * 255)]++;
+//				qt[(int) (pr.getColor(i, j).getGreen() * 255)]++;
+//				qt[(int) (pr.getColor(i, j).getBlue() * 255)]++;
+//			}
+//		}
+//		return qt;
+//	}
+
+	private static int[] histograma(Image imagem, int i) {
+		int[] valorCanal = new int[256];
 		PixelReader pr = imagem.getPixelReader();
-		int w = (int)imagem.getWidth();
-		int h = (int)imagem.getHeight();
-		for(int i=0; i<w; i++) {
-			for(int j=0; j<h; j++) {
-				qt[(int)(pr.getColor(i,j).getRed()*255)]++;
-				qt[(int)(pr.getColor(i,j).getGreen()*255)]++;
-				qt[(int)(pr.getColor(i,j).getBlue()*255)]++;
+		double w = (int) imagem.getWidth();
+		double h = (int) imagem.getHeight();
+
+		if (i == 1) {
+			for (int j = 1; j < w; j++) {
+				for (int k = 1; k < h; k++) {
+					valorCanal[(int) (pr.getColor(j, k).getRed() * 255)]++;
+				}
+
+			}
+		}
+
+		if (i == 2) {
+			for (int j = 1; j < w; j++) {
+				for (int k = 1; k < h; k++) {
+					valorCanal[(int) (pr.getColor(j, k).getGreen() * 255)]++;
+				}
+
+			}
+		}
+
+		if (i == 3) {
+			for (int j = 1; j < w; j++) {
+				for (int k = 1; k < h; k++) {
+					valorCanal[(int) (pr.getColor(j, k).getBlue() * 255)]++;
+				}
+
+			}
+		}
+		return valorCanal;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void getGrafico(Image imagem, BarChart<String, Number> grafico) {
+
+		/* int[] hist = histogramaUnico(imagem); */
+
+		int[] histR = histograma(imagem, 1);
+		int[] histG = histograma(imagem, 2);
+		int[] histB = histograma(imagem, 3);
+
+		/* XYChart.Series vlr = new XYChart.Series(); */
+
+		XYChart.Series vlrR = new XYChart.Series();
+		XYChart.Series vlrG = new XYChart.Series();
+		XYChart.Series vlrB = new XYChart.Series();
+
+		for (int i = 0; i < 256; i++) {
+			/* vlr.getData().add(new XYChart.Data(i + "", hist[i])); */
+			vlrR.getData().add(new XYChart.Data(i + "", histR[i]));
+			vlrG.getData().add(new XYChart.Data(i + "", histG[i]));
+			vlrB.getData().add(new XYChart.Data(i + "", histB[i]));
+
+		}
+
+		grafico.getData().addAll(vlrR, vlrG, vlrB);
+
+		/* grafico.getData().addAll(vlr, vlrR,vlrG, vlrB); */
+
+		for (Node n : grafico.lookupAll(".default-color0.chart-bar")) {
+			n.setStyle("-fx-bar-fill:red;");
+		}
+		for (Node n : grafico.lookupAll(".default-color1.chart-bar")) {
+			n.setStyle("-fx-bar-fill:green;");
+		}
+
+		for (Node n : grafico.lookupAll(".default-color2.chart-bar")) {
+			n.setStyle("-fx-bar-fill:blue;");
+		}
+
+	}
+
+	public static Image equalizacaoHistograma(Image imagem, boolean todos) {
+
+		int w = (int) imagem.getWidth();
+		int h = (int) imagem.getHeight();
+
+		PixelReader pr = imagem.getPixelReader();
+		WritableImage wi = new WritableImage(w, h);
+		PixelWriter pw = wi.getPixelWriter();
+
+		int[] hR = histograma(imagem, Constantes.RED);
+		int[] hG = histograma(imagem, Constantes.GREEN);
+		int[] hB = histograma(imagem, Constantes.BLUE);
+
+		int[] histAcR = histogramaAc(hR);
+		int[] histAcG = histogramaAc(hG);
+		int[] histAcB = histogramaAc(hB);
+
+		int qtTonsRed = qtTons(hR);
+		int qtTonsGreen = qtTons(hG);
+		int qtTonsBlue = qtTons(hB);
+
+		double minR = pontoMin(hR);
+		double minG = pontoMin(hG);
+		double minB = pontoMin(hB);
+
+		if (todos) {
+			qtTonsRed = 255;
+			qtTonsGreen = 255;
+			qtTonsBlue = 255;
+
+			minR = 0;
+			minG = 0;
+			minB = 0;
+		}
+
+		double n = w * h;
+
+		for (int i = 1; i < w; i++) {
+			for (int j = 1; j < h; j++) {
+				Color oldCor = pr.getColor(i, j);
+
+				double acR = histAcR[(int) (oldCor.getRed() * 255)];
+				double acG = histAcG[(int) (oldCor.getGreen() * 255)];
+				double acB = histAcB[(int) (oldCor.getBlue() * 255)];
+
+				double pxR = ((qtTonsRed - 1) / n) * acR;
+				double pxG = ((qtTonsGreen - 1) / n) * acG;
+				double pxB = ((qtTonsBlue - 1) / n) * acB;
+
+				double corR = (minR + pxR) / 255;
+				double corG = (minG + pxG) / 255;
+				double corB = (minB + pxB) / 255;
+
+				Color newCor = new Color(corR, corG, corB, oldCor.getOpacity());
+				pw.setColor(i, j, newCor);
+
+			}
+		}
+		return wi;
+	}
+
+	private static int qtTons(int[] hist) {
+
+		int qt = 0;
+		for (int i = 0; i < 256; i++) {
+			if (hist[i] > 0) {
+				qt++;
 			}
 		}
 		return qt;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void getGrafico(Image imagem, BarChart<String, Number> grafico) {
-		
-	int [] hist = histogramaUnico(imagem);
-	
-	XYChart.Series vlr = new XYChart.Series();
+	private static int[] histogramaAc(int[] hist) {
+		int[] histoAcumulado = new int[256];
+		histoAcumulado[0] = hist[0];
+		for (int i = 1; i < hist.length; i++) {
 
-	for(int i=0; i<hist.length; i++) {
-		vlr.getData().add(new XYChart.Data(i+"", hist[i]));
+			histoAcumulado[i] = hist[i] + histoAcumulado[i - 1];
+		}
+		return histoAcumulado;
 	}
 
-	grafico.getData().addAll(vlr);
-
-	for(Node n:grafico.lookupAll(".default-color0.chart-bar")) {
-		n.setStyle("-fx-bar-fill:blue;");
+	private static int pontoMin(int[] hist) {
+		for (int i = 0; i < hist.length; i++) {
+			if (hist[i] > 0)
+				return i;
+		}
+		return 0;
 	}
-}
-
 }

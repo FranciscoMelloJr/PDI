@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PrincipalController">
+<AnchorPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PrincipalController">
    <children>
       <BorderPane prefHeight="600.0" prefWidth="750.0">
          <top>
@@ -294,9 +294,14 @@
                            <children>
                               <VBox>
                                  <children>
-                                    <Button mnemonicParsing="false" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Equalizar">
+                                    <Button mnemonicParsing="false" onAction="#equalizacao" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Equalizar Todos">
                                        <VBox.margin>
-                                          <Insets left="60.0" top="20.0" />
+                                          <Insets left="47.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#equalizaoValidos" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Equalizar Válidos">
+                                       <VBox.margin>
+                                          <Insets left="45.0" top="20.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>

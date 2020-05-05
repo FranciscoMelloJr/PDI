@@ -43,8 +43,20 @@ public class PrincipalController {
 	private Image img1, img2, img3;
 
 	int x1, y1, x2, y2;
-	
-	@FXML 
+
+	@FXML
+	public void equalizacao() {
+		img3 = Pdi.equalizacaoHistograma(img1, true);
+		atualizaImagem3();
+	}
+
+	@FXML
+	public void equalizaoValidos() {
+		img3 = Pdi.equalizacaoHistograma(img1, false);
+		atualizaImagem3();
+	}
+
+	@FXML
 	public void abreHistograma(ActionEvent event) {
 		try {
 			Stage stage = new Stage();
@@ -52,22 +64,21 @@ public class PrincipalController {
 			Parent root = loader.load();
 			stage.setScene(new Scene(root));
 			stage.setTitle("Histograma");
-			//stage.initModality(Modality.WINDOW_MODAL);
-			stage.initOwner(((Node)event.getSource()).getScene().getWindow());
+			// stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(((Node) event.getSource()).getScene().getWindow());
 			stage.show();
-			HistogramaController controller = (HistogramaController)loader.getController();
-			
-			if(img1!=null) 
+			HistogramaController controller = (HistogramaController) loader.getController();
+
+			if (img1 != null)
 				Pdi.getGrafico(img1, controller.grafico1);
-			if(img2!=null)
+			if (img2 != null)
 				Pdi.getGrafico(img2, controller.grafico2);
-			if(img3!=null)
+			if (img3 != null)
 				Pdi.getGrafico(img3, controller.grafico3);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
 
 	@FXML
 	public void mouseClick(MouseEvent event) {
@@ -92,7 +103,8 @@ public class PrincipalController {
 //		}
 
 			// MARCAÇÕES SEPARADAS EM CADA IMAGEM
-			// Devido comparação com getWidth, imagens de mesmo tamanho podem ser substituídas
+			// Devido comparação com getWidth, imagens de mesmo tamanho podem ser
+			// substituídas
 			if (imgX.getWidth() == img1.getWidth()) {
 				img.setImage(
 						Pdi.marcarImagem(img1, Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2), Math.max(y1, y2)));
