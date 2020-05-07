@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PrincipalController">
+<AnchorPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PrincipalController">
    <children>
       <BorderPane prefHeight="600.0" prefWidth="750.0">
          <top>
@@ -362,7 +362,7 @@
                     <content>
                       <AnchorPane>
                            <children>
-                              <ImageView fx:id="imageView1" fitHeight="185.0" fitWidth="185.0" onMouseMoved="#rasterImg" onMousePressed="#mouseClick" onMouseReleased="#mouseUnclickInvertido" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ImageView fx:id="imageView1" fitHeight="185.0" fitWidth="185.0" onMouseMoved="#rasterImg" onMousePressed="#mouseClick" onMouseReleased="#mouseUnclick" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                     </content>

@@ -30,7 +30,7 @@ public class PrincipalController {
 	ImageView imageView1, imageView2, imageView3;
 
 	@FXML
-	Label labelR, labelG, labelB;
+	Label labelR, labelG, labelB, quadrado;
 
 	@FXML
 	Slider sliderLimiar, sliderR, sliderG, sliderB;
@@ -42,11 +42,34 @@ public class PrincipalController {
 	private Slider sliderIMG1, sliderIMG2;
 
 	@FXML
-	TextField colunas;
+	TextField colunas, primeiroQ, segundoQ;
 
 	private Image img1, img2, img3;
 
 	int x1, y1, x2, y2;
+	
+	@FXML
+	public void identificaQuadrado() {
+
+		if (Pdi.identificarQuebra(img1)) {
+			quadrado.setText("Quebrado");
+		} else {
+			quadrado.setText("Inteiro");
+		}
+	}
+	
+	@FXML
+	public void meiaEqualizacao() {
+		img3 = Pdi.halfEqualizacaoHistograma(img1, true);
+		atualizaImagem3();
+	}
+	
+	@FXML
+	public void dividirQuatro() {
+		img3 = Pdi.dividirQuadrantes(img1, Double.parseDouble(primeiroQ.getText()),
+				Double.parseDouble(segundoQ.getText()));
+		atualizaImagem3();
+	}
 
 	@FXML
 	public void equalizacao() {

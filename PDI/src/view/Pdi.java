@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.scene.Node;
@@ -12,6 +13,240 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 public class Pdi {
+	
+	public static boolean identificarQuebra(Image img1) {
+
+		int w = (int) img1.getWidth();
+		int h = (int) img1.getHeight();
+
+		PixelReader pr = img1.getPixelReader();
+
+		Color preto = new Color(0, 0, 0, 1);
+		Color branco = new Color(1, 1, 1, 1);
+
+		int[] sesq = new int[2];
+		int[] sdir = new int[2];
+		int[] iesq = new int[2];
+		int[] idir = new int[2];
+
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
+
+				try {
+					if (pr.getColor(i, j).equals(preto) && pr.getColor(i + 1, j).equals(preto)
+							&& pr.getColor(i, j + 1).equals(preto)) {
+						sesq[0] = i;
+						sesq[1] = j;
+					} else if (pr.getColor(i, j).equals(preto) && pr.getColor(i + 1, j).equals(preto)
+							&& pr.getColor(i, j - 1).equals(preto)) {
+						iesq[0] = i;
+						iesq[1] = j;
+					} else if (pr.getColor(i, j).equals(preto) && pr.getColor(i - 1, j).equals(preto)
+							&& pr.getColor(i, j + 1).equals(preto)) {
+						sdir[0] = i;
+						sdir[1] = j;
+					} else if (pr.getColor(i, j).equals(preto) && pr.getColor(i - 1, j).equals(preto)
+							&& pr.getColor(i, j - 1).equals(preto)) {
+						idir[0] = i;
+						idir[1] = j;
+					}
+				} catch (NullPointerException e) {
+					continue;
+				}
+			}
+		}
+		for (int i = sesq[0]; i < sdir[0]; i++) {
+			if (pr.getColor(i, sesq[1]).equals(branco)) {
+				return true;
+			}
+		}
+		for (int i = iesq[0]; i < idir[0]; i++) {
+			if (pr.getColor(i, iesq[1]).equals(branco)) {
+				return true;
+			}
+		}
+		for (int j = sesq[1]; j < iesq[1]; j++) {
+			if (pr.getColor(sesq[0], j).equals(branco)) {
+				return true;
+			}
+		}
+		for (int j = sdir[1]; j < idir[1]; j++) {
+			if (pr.getColor(sdir[0], j).equals(branco)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static Image halfEqualizacaoHistograma(Image imagem, boolean todos) {
+
+		int w = (int) imagem.getWidth();
+		int h = (int) imagem.getHeight();
+
+		PixelReader pr = imagem.getPixelReader();
+		WritableImage wi = new WritableImage(w, h);
+		PixelWriter pw = wi.getPixelWriter();
+
+		int[] hR = histograma(imagem, Constantes.RED);
+		int[] hG = histograma(imagem, Constantes.GREEN);
+		int[] hB = histograma(imagem, Constantes.BLUE);
+
+		int[] histAcR = histogramaAc(hR);
+		int[] histAcG = histogramaAc(hG);
+		int[] histAcB = histogramaAc(hB);
+
+		int qtTonsRed = qtTons(hR);
+		int qtTonsGreen = qtTons(hG);
+		int qtTonsBlue = qtTons(hB);
+
+		double minR = pontoMin(hR);
+		double minG = pontoMin(hG);
+		double minB = pontoMin(hB);
+
+		if (todos) {
+			qtTonsRed = 255;
+			qtTonsGreen = 255;
+			qtTonsBlue = 255;
+
+			minR = 0;
+			minG = 0;
+			minB = 0;
+		}
+
+		double n = w * h;
+
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
+				pw.setColor(i, j, pr.getColor(i, j));
+			}
+		}
+
+		Color blackColor = new Color(0, 0, 0, 1);
+		
+		for (int i = 1; i < w; i++) {
+			for (int j = 1; j < h; j++) {
+				if (i > j) {
+					Color oldCor = pr.getColor(i, j);
+
+					double acR = histAcR[(int) (oldCor.getRed() * 255)];
+					double acG = histAcG[(int) (oldCor.getGreen() * 255)];
+					double acB = histAcB[(int) (oldCor.getBlue() * 255)];
+
+					double pxR = ((qtTonsRed - 1) / n) * acR;
+					double pxG = ((qtTonsGreen - 1) / n) * acG;
+					double pxB = ((qtTonsBlue - 1) / n) * acB;
+
+					double corR = (minR + pxR) / 255;
+					double corG = (minG + pxG) / 255;
+					double corB = (minB + pxB) / 255;
+
+					Color newCor = new Color(corR, corG, corB, oldCor.getOpacity());
+					pw.setColor(i, j, newCor);
+
+				}
+				if (i == j) {
+					pw.setColor(i, j, blackColor);
+				}
+			}
+		}
+		return wi;
+	
+}
+	
+	public static Image dividirQuadrantes(Image img1, Double primeiroQ, Double segundoQ) {
+
+		int largura = (int) img1.getWidth();
+		int altura = (int) img1.getHeight();
+
+		int divLargura = largura / 2;
+		int divAltura = altura / 2;
+
+		ArrayList<Color> quadrante1 = new ArrayList<>();
+		ArrayList<Color> quadrante2 = new ArrayList<>();
+		ArrayList<Color> quadrante3 = new ArrayList<>();
+		ArrayList<Color> quadrante4 = new ArrayList<>();
+
+		PixelReader pr = img1.getPixelReader();
+		WritableImage wi = new WritableImage(largura, altura);
+		PixelWriter pw = wi.getPixelWriter();
+
+		for (int i = 0; i < largura; i++) {
+			for (int j = 0; j < altura; j++) {
+				pw.setColor(i, j, pr.getColor(i, j));
+			}
+		}
+
+		if (primeiroQ == 1.0 || segundoQ == 1.0) {
+			for (int i = 0; i < divLargura; i++) {
+				for (int j = 0; j < divAltura; j++) {
+					quadrante1.add(pr.getColor(i, j));
+				}
+			}
+
+			int count = 0;
+			for (int i = (divLargura) - 1; i > 0; i--) {
+				for (int j = (divAltura) - 1; j > 0; j--) {
+					pw.setColor(i, j, quadrante1.get(count));
+					count++;
+				}
+				count++;
+			}
+		}
+
+		if (primeiroQ == 2.0 || segundoQ == 2.0) {
+			for (int i = divLargura; i < largura; i++) {
+				for (int j = 0; j < divAltura; j++) {
+					quadrante2.add(pr.getColor(i, j));
+				}
+			}
+
+			int count = 0;
+			for (int i = largura - 1; i > (divLargura) - 1; i--) {
+				for (int j = (divAltura) - 1; j > 0; j--) {
+					pw.setColor(i, j, quadrante2.get(count));
+					count++;
+				}
+				count++;
+			}
+		}
+
+		if (primeiroQ == 3.0 || segundoQ == 3.0) {
+			for (int i = 0; i < divLargura; i++) {
+				for (int j = divAltura; j < altura; j++) {
+					quadrante3.add(pr.getColor(i, j));
+				}
+			}
+
+			int count = 0;
+			for (int i = (divLargura) - 1; i > 0; i--) {
+				for (int j = altura - 2; j > (divAltura) - 1; j--) {
+					pw.setColor(i, j, quadrante3.get(count));
+					count++;
+				}
+				count++;
+			}
+		}
+
+		if (primeiroQ == 4.0 || segundoQ == 4.0) {
+			for (int i = divLargura; i < largura; i++) {
+				for (int j = divAltura; j < altura; j++) {
+					quadrante4.add(pr.getColor(i, j));
+				}
+			}
+
+			int count = 0;
+			for (int i = largura - 1; i > (divLargura) - 1; i--) {
+				for (int j = altura - 2; j > (divAltura) - 1; j--) {
+					pw.setColor(i, j, quadrante4.get(count));
+					count++;
+				}
+				count++;
+			}
+		}
+
+		return wi;
+
+	}
 
 	public static Image cinzaMediaAritmeticaZebrada(Image imagem, int pcR, int pcG, int pcB, int colunas) {
 		try {
