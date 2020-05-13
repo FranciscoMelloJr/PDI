@@ -338,13 +338,73 @@
                                           </Button>
                                        </children>
                                     </HBox>
-                                    <HBox prefHeight="50.0" prefWidth="200.0">
+                                    <HBox>
                                        <children>
-                                          <Label text="Inveter Imagem Ativado">
+                                          <Label text="Questão 1">
                                              <font>
-                                                <Font name="System Bold" size="12.0" />
+                                                <Font name="System Bold" size="13.0" />
                                              </font>
+                                             <HBox.margin>
+                                                <Insets top="10.0" />
+                                             </HBox.margin>
                                           </Label>
+                                          <TextField fx:id="primeiroQ" prefHeight="25.0" prefWidth="30.0" promptText="1º">
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="5.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <TextField fx:id="segundoQ" prefHeight="25.0" prefWidth="30.0" promptText="2º">
+                                             <HBox.margin>
+                                                <Insets left="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Button mnemonicParsing="false" onAction="#dividirQuatro" prefHeight="25.0" prefWidth="40.0" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="OK">
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <Label text="Questão 2">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <Button mnemonicParsing="false" onAction="#meiaEqualizacao" prefHeight="25.0" prefWidth="40.0" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="OK">
+                                             <HBox.margin>
+                                                <Insets left="25.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Questão 3">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <Label fx:id="quadrado" text="Identificador">
+                                             <font>
+                                                <Font name="Times New Roman" size="13.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="5.0" top="12.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <Button mnemonicParsing="false" onAction="#identificaQuadrado" prefHeight="25.0" prefWidth="40.0" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="OK">
+                                             <HBox.margin>
+                                                <Insets left="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Button>
                                        </children>
                                     </HBox>
                                  </children>

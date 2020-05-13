@@ -42,7 +42,7 @@ public class PrincipalController {
 	private Slider sliderIMG1, sliderIMG2;
 
 	@FXML
-	TextField colunas, primeiroQ, segundoQ;
+	TextField colunas, segundoQ, primeiroQ;
 
 	private Image img1, img2, img3;
 
