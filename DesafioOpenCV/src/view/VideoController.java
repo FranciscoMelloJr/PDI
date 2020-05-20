@@ -96,7 +96,7 @@ public class VideoController {
 						// effectively grab and process a single frame
 						Mat frame = grabFrame();
 						// convert and show the frame
-						Image imageToShow = Utils.mat2Image(frame);
+						Image imageToShow = Utils.matImage(frame);
 						updateImageView(currentFrame, imageToShow);
 					}
 				};
@@ -243,7 +243,7 @@ public class VideoController {
 		}
 
 		// display the histogram...
-		Image histImg = Utils.mat2Image(histImage);
+		Image histImg = Utils.matImage(histImage);
 		updateImageView(histogram, histImg);
 
 	}
