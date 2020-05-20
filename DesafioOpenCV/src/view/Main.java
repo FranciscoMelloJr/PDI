@@ -16,12 +16,12 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Principal.fxml"));
 			AnchorPane root = (AnchorPane) loader.load();
-			Scene scene = new Scene(root, 800, 600);
+			Scene scene = new Scene(root, 900, 600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 
-			VideoController controller = loader.getController();
+			PrincipalController controller = loader.getController();
 			primaryStage.setOnCloseRequest((new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
 					controller.setClosed();
