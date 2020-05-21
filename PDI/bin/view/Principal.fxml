@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
@@ -40,7 +41,7 @@
                            <children>
                               <Label fx:id="labelR" prefHeight="130.0" prefWidth="140.0" text="RED:" textFill="RED">
                                  <font>
-                                    <Font name="ROGFonts-Regular" size="22.0" />
+                                    <Font name="ROGFontsv1.6-Regular" size="32.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets left="25.0" top="20.0" />
@@ -48,28 +49,40 @@
                               </Label>
                               <Label fx:id="labelG" prefHeight="130.0" prefWidth="190.0" text="GREEN:" textFill="LIME">
                                  <font>
-                                    <Font name="ROGFonts-Regular" size="22.0" />
+                                    <Font name="ROGFontsv1.6-Regular" size="32.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets top="20.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="labelB" prefHeight="130.0" prefWidth="160.0" text="BLUE:" textFill="BLUE">
+                              <Label fx:id="labelB" prefHeight="103.0" prefWidth="141.0" text="BLUE:" textFill="BLUE">
                                  <font>
-                                    <Font name="ROGFonts-Regular" size="22.0" />
+                                    <Font name="ROGFontsv1.6-Regular" size="32.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets top="20.0" />
                                  </HBox.margin>
                               </Label>
-                              <Button mnemonicParsing="false" onAction="#abreHistograma" prefHeight="38.0" prefWidth="119.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: black;" text="HIstograma">
-                                 <font>
-                                    <Font name="ROGFonts-Regular" size="10.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets bottom="80.0" right="5.0" top="10.0" />
-                                 </HBox.margin>
-                              </Button>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#abreHistograma" prefHeight="38.0" prefWidth="119.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: black;" text="HIstograma">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets right="5.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#abreVideo" prefHeight="38.0" prefWidth="119.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: black;" text="Camera">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets right="5.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
                         <HBox prefHeight="50.0">
@@ -410,6 +423,36 @@
                                  </children>
                               </VBox>
                            </children></AnchorPane>
+                    </content>
+                  </TitledPane>
+                  <TitledPane animated="false" text="Canny (Com erro)">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="62.0" prefWidth="190.0">
+                                 <children>
+                                    <CheckBox mnemonicParsing="false" text="Detecção de Borda">
+                                       <VBox.margin>
+                                          <Insets left="30.0" top="5.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </CheckBox>
+                                    <Label text="Canny Threshold">
+                                       <VBox.margin>
+                                          <Insets left="40.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Slider showTickLabels="true" showTickMarks="true">
+                                       <VBox.margin>
+                                          <Insets left="20.0" right="20.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Slider>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
                     </content>
                   </TitledPane>
               </panes>

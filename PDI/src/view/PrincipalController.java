@@ -6,6 +6,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.opencv.core.Mat;
+import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
@@ -39,15 +45,21 @@ public class PrincipalController {
 	RadioButton vizinhoC, vizinhoX, vizinho3;
 
 	@FXML
-	private Slider sliderIMG1, sliderIMG2;
+	Slider sliderIMG1, sliderIMG2;
 
 	@FXML
 	TextField colunas, segundoQ, primeiroQ;
 
+	/*
+	 * @FXML Slider threshold;
+	 * 
+	 * @FXML CheckBox canny;
+	 */
+
 	private Image img1, img2, img3;
 
 	int x1, y1, x2, y2;
-	
+
 	@FXML
 	public void identificaQuadrado() {
 
@@ -57,13 +69,13 @@ public class PrincipalController {
 			quadrado.setText("Inteiro");
 		}
 	}
-	
+
 	@FXML
 	public void meiaEqualizacao() {
 		img3 = Pdi.halfEqualizacaoHistograma(img1, true);
 		atualizaImagem3();
 	}
-	
+
 	@FXML
 	public void dividirQuatro() {
 		img3 = Pdi.dividirQuadrantes(img1, Double.parseDouble(primeiroQ.getText()),
@@ -102,6 +114,22 @@ public class PrincipalController {
 				Pdi.getGrafico(img2, controller.grafico2);
 			if (img3 != null)
 				Pdi.getGrafico(img3, controller.grafico3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void abreVideo(ActionEvent event) {
+		try {
+			Stage stage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Video.fxml"));
+			Parent root = loader.load();
+			stage.setScene(new Scene(root));
+			stage.setTitle("Video");
+			// stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -174,6 +202,33 @@ public class PrincipalController {
 		img3 = Pdi.ruidos(img1, op);
 		atualizaImagem3();
 	}
+
+	/*
+	 * @FXML public void cannySelecionado() { if (this.canny.isSelected()) {
+	 * fazerCanny(); } }
+	 * 
+	 * 
+	 * public Mat fazerCanny() {
+	 * 
+	 * Mat imagem = Pdi.imageMat(Pdi.imageBuffered(img1));
+	 * 
+	 * 
+	 * Mat grayImage = new Mat(); Mat detectedEdges = new Mat(); try { // convert to
+	 * grayscale Imgproc.cvtColor(imagem, grayImage, Imgproc.COLOR_BGR2GRAY);
+	 * 
+	 * // reduce noise with a 3x3 kernel Imgproc.blur(grayImage, detectedEdges, new
+	 * Size(3, 3));
+	 * 
+	 * // canny detector, with ratio of lower:upper threshold of 3:1
+	 * Imgproc.Canny(detectedEdges, detectedEdges, this.threshold.getValue(),
+	 * this.threshold.getValue() * 3);
+	 * 
+	 * // using Canny's output as a mask, display the result Mat dest = new Mat();
+	 * imagem.copyTo(dest, detectedEdges);
+	 * 
+	 * atualizaImagem3(); return dest; } catch (Exception e) { e.printStackTrace();
+	 * } return null; }
+	 */
 
 	@FXML
 	public void negativa() {
