@@ -6,9 +6,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -18,7 +19,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
@@ -29,6 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import utils.Utils;
 
 public class PrincipalController {
 
@@ -39,22 +40,16 @@ public class PrincipalController {
 	Label labelR, labelG, labelB, quadrado;
 
 	@FXML
-	Slider sliderLimiar, sliderR, sliderG, sliderB;
+	Slider sliderLimiar, sliderR, sliderG, sliderB, threshold;
 
 	@FXML
-	RadioButton vizinhoC, vizinhoX, vizinho3;
+	RadioButton vizinhoC, vizinhoX, vizinho3, canny, sobel;
 
 	@FXML
 	Slider sliderIMG1, sliderIMG2;
 
 	@FXML
 	TextField colunas, segundoQ, primeiroQ;
-
-	/*
-	 * @FXML Slider threshold;
-	 * 
-	 * @FXML CheckBox canny;
-	 */
 
 	private Image img1, img2, img3;
 
@@ -125,7 +120,7 @@ public class PrincipalController {
 			Stage stage = new Stage();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Video.fxml"));
 			Parent root = loader.load();
-			stage.setScene(new Scene(root));
+			stage.setScene(new Scene(root, 600, 500));
 			stage.setTitle("Video");
 			// stage.initModality(Modality.WINDOW_MODAL);
 			stage.initOwner(((Node) event.getSource()).getScene().getWindow());
@@ -203,32 +198,58 @@ public class PrincipalController {
 		atualizaImagem3();
 	}
 
-	/*
-	 * @FXML public void cannySelecionado() { if (this.canny.isSelected()) {
-	 * fazerCanny(); } }
-	 * 
-	 * 
-	 * public Mat fazerCanny() {
-	 * 
-	 * Mat imagem = Pdi.imageMat(Pdi.imageBuffered(img1));
-	 * 
-	 * 
-	 * Mat grayImage = new Mat(); Mat detectedEdges = new Mat(); try { // convert to
-	 * grayscale Imgproc.cvtColor(imagem, grayImage, Imgproc.COLOR_BGR2GRAY);
-	 * 
-	 * // reduce noise with a 3x3 kernel Imgproc.blur(grayImage, detectedEdges, new
-	 * Size(3, 3));
-	 * 
-	 * // canny detector, with ratio of lower:upper threshold of 3:1
-	 * Imgproc.Canny(detectedEdges, detectedEdges, this.threshold.getValue(),
-	 * this.threshold.getValue() * 3);
-	 * 
-	 * // using Canny's output as a mask, display the result Mat dest = new Mat();
-	 * imagem.copyTo(dest, detectedEdges);
-	 * 
-	 * atualizaImagem3(); return dest; } catch (Exception e) { e.printStackTrace();
-	 * } return null; }
-	 */
+	@FXML
+	public void sobelSelecionado() {
+		isSelected();
+		if (this.sobel.isSelected()) {
+			fazerSobel(Utils.imageMat(img1));
+		}
+		updateCurrentImage(imageView3, img3);
+	}
+
+	@FXML
+	public void cannySelecionado() {
+		isSelected();
+		if (this.canny.isSelected()) {
+			fazerCanny(Utils.imageMat(img1));
+		}
+		updateCurrentImage(imageView3, img3);
+	}
+
+	private void fazerSobel(Mat frame) {
+		Mat grayMat = new Mat();
+		Mat sobel = new Mat();
+
+		Mat grad_x = new Mat();
+		Mat abs_grad_x = new Mat();
+
+		Mat grad_y = new Mat();
+		Mat abs_grad_y = new Mat();
+
+		Imgproc.cvtColor(frame, grayMat, Imgproc.COLOR_BGR2GRAY);
+		Imgproc.Sobel(grayMat, grad_x, CvType.CV_16S, 1, 0, 3, 1, 0);
+		Imgproc.Sobel(grayMat, grad_y, CvType.CV_16S, 0, 1, 3, 1, 0);
+		Core.convertScaleAbs(grad_x, abs_grad_x);
+		Core.convertScaleAbs(grad_y, abs_grad_y);
+		Core.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 1, sobel);
+
+		updateCurrentImage(Utils.matImage(sobel));
+	}
+
+	public void fazerCanny(Mat frame) {
+
+		Mat grayImage = new Mat();
+		Mat detectedEdges = new Mat();
+
+		Imgproc.cvtColor(frame, grayImage, Imgproc.COLOR_BGR2GRAY);
+		Imgproc.blur(grayImage, detectedEdges, new Size(3, 3));
+		Imgproc.Canny(detectedEdges, detectedEdges, this.threshold.getValue(), this.threshold.getValue() * 3);
+
+		Mat dest = new Mat();
+		frame.copyTo(dest, detectedEdges);
+		updateCurrentImage(Utils.matImage(detectedEdges));
+
+	}
 
 	@FXML
 	public void negativa() {
@@ -297,6 +318,7 @@ public class PrincipalController {
 		imageView3.setImage(img3);
 		imageView3.setFitWidth(img3.getWidth());
 		imageView3.setFitHeight(img3.getHeight());
+
 	}
 
 	private Image abreImagem(ImageView imageView, Image image) {
@@ -350,6 +372,21 @@ public class PrincipalController {
 			}
 		}
 
+	}
+
+	private void updateCurrentImage(ImageView imageView, Image image) {
+		imageView.setImage(image);
+	}
+
+	private void updateCurrentImage(Image image) {
+		img3 = image;
+	}
+
+	public void isSelected() {
+		if (this.canny.isSelected())
+			this.threshold.setDisable(false);
+		else
+			this.threshold.setDisable(true);
 	}
 
 }

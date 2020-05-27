@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
@@ -20,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PrincipalController">
+<AnchorPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PrincipalController">
    <children>
       <BorderPane prefHeight="600.0" prefWidth="750.0">
          <top>
@@ -431,20 +430,25 @@
                            <children>
                               <VBox prefHeight="62.0" prefWidth="190.0">
                                  <children>
-                                    <CheckBox mnemonicParsing="false" text="Detecção de Borda">
+                                    <RadioButton fx:id="sobel" mnemonicParsing="false" onAction="#sobelSelecionado" text="Sobel">
                                        <VBox.margin>
-                                          <Insets left="30.0" top="5.0" />
+                                          <Insets left="60.0" top="10.0" />
                                        </VBox.margin>
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </CheckBox>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="detecção" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="canny" mnemonicParsing="false" onAction="#cannySelecionado" text="Canny" toggleGroup="$detecção">
+                                       <VBox.margin>
+                                          <Insets left="60.0" top="10.0" />
+                                       </VBox.margin>
+                                    </RadioButton>
                                     <Label text="Canny Threshold">
                                        <VBox.margin>
-                                          <Insets left="40.0" top="10.0" />
+                                          <Insets left="50.0" top="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Slider showTickLabels="true" showTickMarks="true">
+                                    <Slider fx:id="threshold" disable="true" showTickLabels="true" showTickMarks="true">
                                        <VBox.margin>
                                           <Insets left="20.0" right="20.0" top="5.0" />
                                        </VBox.margin>
@@ -483,7 +487,7 @@
                     <content>
                       <AnchorPane>
                            <children>
-                              <ImageView fx:id="imageView3" fitHeight="185.0" fitWidth="185.0" onMouseMoved="#rasterImg" onMousePressed="#mouseClick" onMouseReleased="#mouseUnclick" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ImageView fx:id="imageView3" fitHeight="185.0" fitWidth="185.0" layoutX="-23.0" onMouseMoved="#rasterImg" onMousePressed="#mouseClick" onMouseReleased="#mouseUnclick" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                     </content>

@@ -1,15 +1,7 @@
 package view;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import javax.imageio.ImageIO;
-
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
 
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
@@ -21,7 +13,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 public class Pdi {
-	
+
 	public static boolean identificarQuebra(Image img1) {
 
 		int w = (int) img1.getWidth();
@@ -85,7 +77,7 @@ public class Pdi {
 		}
 		return false;
 	}
-	
+
 	public static Image halfEqualizacaoHistograma(Image imagem, boolean todos) {
 
 		int w = (int) imagem.getWidth();
@@ -130,7 +122,7 @@ public class Pdi {
 		}
 
 		Color blackColor = new Color(0, 0, 0, 1);
-		
+
 		for (int i = 1; i < w; i++) {
 			for (int j = 1; j < h; j++) {
 				if (i > j) {
@@ -158,9 +150,9 @@ public class Pdi {
 			}
 		}
 		return wi;
-	
-}
-	
+
+	}
+
 	public static Image dividirQuadrantes(Image img1, Double primeiroQ, Double segundoQ) {
 
 		int largura = (int) img1.getWidth();
@@ -378,47 +370,6 @@ public class Pdi {
 		}
 	}
 
-	public static BufferedImage imageBuffered (Image imagem) { 
-		
-		BufferedImage img = null;
-		try {
-		    img = ImageIO.read(new File(imagem.toString()));
-		} catch (IOException e) {
-		}
-		return img;
-	}
-	
-	public static Mat imageMat (BufferedImage imagem) {
-		
-		 Mat out;
-	        byte[] data;
-	        int r, g, b;
-
-	        if (imagem.getType() == BufferedImage.TYPE_INT_RGB) {
-	            out = new Mat(imagem.getHeight(), imagem.getWidth(), CvType.CV_8UC3);
-	            data = new byte[imagem.getWidth() * imagem.getHeight() * (int) out.elemSize()];
-	            int[] dataBuff = imagem.getRGB(0, 0, imagem.getWidth(), imagem.getHeight(), null, 0, imagem.getWidth());
-	            for (int i = 0; i < dataBuff.length; i++) {
-	                data[i * 3] = (byte) ((dataBuff[i] >> 0) & 0xFF);
-	                data[i * 3 + 1] = (byte) ((dataBuff[i] >> 8) & 0xFF);
-	                data[i * 3 + 2] = (byte) ((dataBuff[i] >> 16) & 0xFF);
-	            }
-	        } else {
-	            out = new Mat(imagem.getHeight(), imagem.getWidth(), CvType.CV_8UC1);
-	            data = new byte[imagem.getWidth() * imagem.getHeight() * (int) out.elemSize()];
-	            int[] dataBuff = imagem.getRGB(0, 0, imagem.getWidth(), imagem.getHeight(), null, 0, imagem.getWidth());
-	            for (int i = 0; i < dataBuff.length; i++) {
-	                r = (byte) ((dataBuff[i] >> 0) & 0xFF);
-	                g = (byte) ((dataBuff[i] >> 8) & 0xFF);
-	                b = (byte) ((dataBuff[i] >> 16) & 0xFF);
-	                data[i] = (byte) ((0.21 * r) + (0.71 * g) + (0.07 * b));
-	            }
-	        }
-	        out.put(0, 0, data);
-	        return out;
-	    }
-
-	
 	public static Image ruidos(Image imagem, int tipoVizinhos) {
 
 		try {

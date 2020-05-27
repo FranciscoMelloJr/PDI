@@ -2,16 +2,17 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VideoController">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VideoController">
   <bottom>
     <HBox alignment="CENTER">
       <padding>
@@ -34,17 +35,35 @@
         <padding>
           <Insets bottom="10.0" top="10.0" />
         </padding>
-        <CheckBox fx:id="canny" onAction="#cannySelected" text="Edge detection" />
-        <Label text="Canny Threshold" />
-        <Slider fx:id="threshold" disable="true" />
+            <RadioButton fx:id="sobel" mnemonicParsing="false" onAction="#isSelected" text="Sobel">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+               <toggleGroup>
+                  <ToggleGroup fx:id="detecção" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="canny" mnemonicParsing="false" onAction="#isSelected" text="Canny" toggleGroup="$detecção">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </RadioButton>
+        <Label text="Intensidade">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+        <Slider fx:id="threshold" disable="true">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Slider>
       </HBox>
       <Separator />
       <HBox alignment="CENTER" spacing="10.0">
         <padding>
           <Insets bottom="10.0" top="10.0" />
         </padding>
-        <CheckBox fx:id="dilateErode" onAction="#dilateErodeSelected" text="Background removal" />
-        <CheckBox fx:id="inverse" disable="true" text="Invert" />
       </HBox>
       <Separator />
     </VBox>
