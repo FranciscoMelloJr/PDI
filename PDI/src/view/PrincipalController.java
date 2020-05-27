@@ -43,7 +43,7 @@ public class PrincipalController {
 	Slider sliderLimiar, sliderR, sliderG, sliderB, threshold;
 
 	@FXML
-	RadioButton vizinhoC, vizinhoX, vizinho3, canny, sobel;
+	RadioButton vizinhoC, vizinhoX, vizinho3, canny, sobel, laplace;
 
 	@FXML
 	Slider sliderIMG1, sliderIMG2;
@@ -216,6 +216,15 @@ public class PrincipalController {
 		updateCurrentImage(imageView3, img3);
 	}
 
+	@FXML
+	public void laplaceSelecionado() {
+		isSelected();
+		if (this.laplace.isSelected()) {
+			fazerLaplace(Utils.imageMat(img1));
+		}
+		updateCurrentImage(imageView3, img3);
+	}
+
 	private void fazerSobel(Mat frame) {
 		Mat grayMat = new Mat();
 		Mat sobel = new Mat();
@@ -374,6 +383,33 @@ public class PrincipalController {
 
 	}
 
+	public void fazerLaplace(Mat frame) {
+
+		Mat src = frame, src_gray = new Mat(), dst = new Mat();
+		int kernel_size = 3;
+		int scale = 1;
+		int delta = 0;
+		int ddepth = CvType.CV_16S;
+
+		if (src.empty()) {
+			System.out.println("Erro ao abrir imagem");
+			System.out.println("Program Arguments: [image_name -- default ../data/lena.jpg] \n");
+		}
+
+		Imgproc.GaussianBlur(src, src, new Size(3, 3), 0, 0, Core.BORDER_DEFAULT);
+		Imgproc.cvtColor(src, src_gray, Imgproc.COLOR_RGB2GRAY);
+
+		Mat abs_dst = new Mat();
+		Imgproc.Laplacian(src_gray, dst, ddepth, kernel_size, scale, delta, Core.BORDER_DEFAULT);
+		Core.convertScaleAbs(dst, abs_dst);
+
+		/**
+		 * Mostrar em uma nova aba. HighGui.imshow(window_name, abs_dst);
+		 * HighGui.waitKey(0);
+		 **/
+		updateCurrentImage(Utils.matImage(abs_dst));
+	}
+
 	private void updateCurrentImage(ImageView imageView, Image image) {
 		imageView.setImage(image);
 	}
@@ -387,6 +423,15 @@ public class PrincipalController {
 			this.threshold.setDisable(false);
 		else
 			this.threshold.setDisable(true);
+	}
+
+	@FXML
+	public void limpar() {
+
+		this.canny.setSelected(false);
+		this.sobel.setSelected(false);
+		this.laplace.setSelected(false);
+
 	}
 
 }

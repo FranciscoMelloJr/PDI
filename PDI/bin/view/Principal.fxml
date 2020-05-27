@@ -40,15 +40,15 @@
                            <children>
                               <Label fx:id="labelR" prefHeight="130.0" prefWidth="140.0" text="RED:" textFill="RED">
                                  <font>
-                                    <Font name="ROGFontsv1.6-Regular" size="32.0" />
+                                    <Font name="ROGFonts-Regular" size="20.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets left="25.0" top="20.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="labelG" prefHeight="130.0" prefWidth="190.0" text="GREEN:" textFill="LIME">
+                              <Label fx:id="labelG" prefHeight="130.0" prefWidth="170.0" text="GREEN:" textFill="LIME">
                                  <font>
-                                    <Font name="ROGFontsv1.6-Regular" size="32.0" />
+                                    <Font name="ROGFonts-Regular" size="20.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets top="20.0" />
@@ -56,7 +56,7 @@
                               </Label>
                               <Label fx:id="labelB" prefHeight="103.0" prefWidth="141.0" text="BLUE:" textFill="BLUE">
                                  <font>
-                                    <Font name="ROGFontsv1.6-Regular" size="32.0" />
+                                    <Font name="ROGFonts-Regular" size="20.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets top="20.0" />
@@ -72,7 +72,7 @@
                                           <Insets right="5.0" top="20.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button mnemonicParsing="false" onAction="#abreVideo" prefHeight="38.0" prefWidth="119.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: black;" text="Camera">
+                                    <Button mnemonicParsing="false" onAction="#abreVideo" prefHeight="38.0" prefWidth="119.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: black;" text="Câmera">
                                        <font>
                                           <Font size="11.0" />
                                        </font>
@@ -430,13 +430,18 @@
                            <children>
                               <VBox prefHeight="62.0" prefWidth="190.0">
                                  <children>
-                                    <RadioButton fx:id="sobel" mnemonicParsing="false" onAction="#sobelSelecionado" text="Sobel">
+                                    <RadioButton fx:id="laplace" mnemonicParsing="false" onAction="#laplaceSelecionado" text="Laplace">
                                        <VBox.margin>
                                           <Insets left="60.0" top="10.0" />
                                        </VBox.margin>
                                        <toggleGroup>
                                           <ToggleGroup fx:id="detecção" />
                                        </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="sobel" mnemonicParsing="false" onAction="#sobelSelecionado" text="Sobel" toggleGroup="$detecção">
+                                       <VBox.margin>
+                                          <Insets left="60.0" top="10.0" />
+                                       </VBox.margin>
                                     </RadioButton>
                                     <RadioButton fx:id="canny" mnemonicParsing="false" onAction="#cannySelecionado" text="Canny" toggleGroup="$detecção">
                                        <VBox.margin>
@@ -453,6 +458,14 @@
                                           <Insets left="20.0" right="20.0" top="5.0" />
                                        </VBox.margin>
                                     </Slider>
+                                    <Button mnemonicParsing="false" onAction="#limpar" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: red;" text="Limpar Seleção">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="20.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Button>
                                  </children>
                               </VBox>
                            </children>
