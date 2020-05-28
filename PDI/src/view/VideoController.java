@@ -40,18 +40,12 @@ public class VideoController {
 	Point clickedPoint = new Point(0, 0);
 	Mat oldFrame;
 
-	protected void init() {
-		this.threshold.setShowTickLabels(true);
-	}
-
 	@FXML
 	protected void startCamera() {
-		// set a fixed width for the frame
+
 		originalFrame.setFitWidth(380);
-		// preserve image ratio
 		originalFrame.setPreserveRatio(true);
 
-		// mouse listener
 		originalFrame.setOnMouseClicked(e -> {
 			System.out.println("[" + e.getX() + ", " + e.getY() + "]");
 			clickedPoint.x = e.getX();
@@ -59,24 +53,18 @@ public class VideoController {
 		});
 
 		if (!this.cameraActive) {
-			// disable setting checkboxes
-			this.canny.setDisable(true);
 
-			// start the video capture
 			this.capture.open(0);
 
-			// is the video stream available?
 			if (this.capture.isOpened()) {
 				this.cameraActive = true;
 
-				// grab a frame every 33 ms (30 frames/sec)
 				Runnable frameGrabber = new Runnable() {
 
 					@Override
 					public void run() {
-						// effectively grab and process a single frame
+
 						Mat frame = grabFrame();
-						// convert and show the frame
 						Image imageToShow = Utils.matImage(frame);
 						updateImageView(originalFrame, imageToShow);
 					}
@@ -85,21 +73,17 @@ public class VideoController {
 				this.timer = Executors.newSingleThreadScheduledExecutor();
 				this.timer.scheduleAtFixedRate(frameGrabber, 0, 33, TimeUnit.MILLISECONDS);
 
-				// update the button content
-				this.cameraButton.setText("Stop Camera");
+				this.cameraButton.setText("Parar câmera");
 			} else {
-				// log the error
-				System.err.println("Failed to open the camera connection...");
+
+				System.err.println("Falha de conexão com a câmera...");
 			}
 		} else {
-			// the camera is not active at this point
+
 			this.cameraActive = false;
-			// update again the button content
-			this.cameraButton.setText("Start Camera");
-			// enable setting checkboxes
+			this.cameraButton.setText("Iniciar vídeo");
 			this.canny.setDisable(false);
 
-			// stop the timer
 			this.stopAcquisition();
 		}
 	}
@@ -121,7 +105,7 @@ public class VideoController {
 					}
 				}
 			} catch (Exception e) {
-				System.err.print("Exception in the image elaboration...");
+				System.err.print("Não foi possível coletar a imagem...");
 				e.printStackTrace();
 			}
 		}
@@ -166,7 +150,6 @@ public class VideoController {
 
 		if (src.empty()) {
 			System.out.println("Erro ao abrir imagem");
-			System.out.println("Program Arguments: [image_name -- default ../data/lena.jpg] \n");
 		}
 
 		Imgproc.GaussianBlur(src, src, new Size(3, 3), 0, 0, Core.BORDER_DEFAULT);
@@ -180,19 +163,16 @@ public class VideoController {
 	}
 
 	private Mat doCanny(Mat frame) {
-		// init
+		
 		Mat grayImage = new Mat();
 		Mat detectedEdges = new Mat();
 
 		// convert to grayscale
 		Imgproc.cvtColor(frame, grayImage, Imgproc.COLOR_BGR2GRAY);
-
 		// reduce noise with a 3x3 kernel
 		Imgproc.blur(grayImage, detectedEdges, new Size(3, 3));
-
 		// canny detector, with ratio of lower:upper threshold of 3:1
 		Imgproc.Canny(detectedEdges, detectedEdges, this.threshold.getValue(), this.threshold.getValue() * 3);
-
 		// using Canny's output as a mask, display the result
 		Mat dest = new Mat();
 		frame.copyTo(dest, detectedEdges);
@@ -253,7 +233,7 @@ public class VideoController {
 				this.timer.shutdown();
 				this.timer.awaitTermination(33, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
-				System.err.println("Exception in stopping the frame capture, trying to release the camera now... " + e);
+				System.err.println("Falha em parar a camptura de frame, tentando para a câmera... " + e);
 			}
 		}
 

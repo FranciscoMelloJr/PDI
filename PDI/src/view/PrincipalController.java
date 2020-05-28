@@ -260,6 +260,32 @@ public class PrincipalController {
 
 	}
 
+	public void fazerLaplace(Mat frame) {
+
+		Mat src = frame, src_gray = new Mat(), dst = new Mat();
+		int kernel_size = 3;
+		int scale = 1;
+		int delta = 0;
+		int ddepth = CvType.CV_16S;
+
+		if (src.empty()) {
+			System.out.println("Erro ao abrir imagem");
+		}
+
+		Imgproc.GaussianBlur(src, src, new Size(3, 3), 0, 0, Core.BORDER_DEFAULT);
+		Imgproc.cvtColor(src, src_gray, Imgproc.COLOR_RGB2GRAY);
+
+		Mat abs_dst = new Mat();
+		Imgproc.Laplacian(src_gray, dst, ddepth, kernel_size, scale, delta, Core.BORDER_DEFAULT);
+		Core.convertScaleAbs(dst, abs_dst);
+
+		/**
+		 * Mostrar em uma nova aba. HighGui.imshow(window_name, abs_dst);
+		 * HighGui.waitKey(0);
+		 **/
+		updateCurrentImage(Utils.matImage(abs_dst));
+	}
+
 	@FXML
 	public void negativa() {
 		img3 = Pdi.negativa(img1);
@@ -381,33 +407,6 @@ public class PrincipalController {
 			}
 		}
 
-	}
-
-	public void fazerLaplace(Mat frame) {
-
-		Mat src = frame, src_gray = new Mat(), dst = new Mat();
-		int kernel_size = 3;
-		int scale = 1;
-		int delta = 0;
-		int ddepth = CvType.CV_16S;
-
-		if (src.empty()) {
-			System.out.println("Erro ao abrir imagem");
-			System.out.println("Program Arguments: [image_name -- default ../data/lena.jpg] \n");
-		}
-
-		Imgproc.GaussianBlur(src, src, new Size(3, 3), 0, 0, Core.BORDER_DEFAULT);
-		Imgproc.cvtColor(src, src_gray, Imgproc.COLOR_RGB2GRAY);
-
-		Mat abs_dst = new Mat();
-		Imgproc.Laplacian(src_gray, dst, ddepth, kernel_size, scale, delta, Core.BORDER_DEFAULT);
-		Core.convertScaleAbs(dst, abs_dst);
-
-		/**
-		 * Mostrar em uma nova aba. HighGui.imshow(window_name, abs_dst);
-		 * HighGui.waitKey(0);
-		 **/
-		updateCurrentImage(Utils.matImage(abs_dst));
 	}
 
 	private void updateCurrentImage(ImageView imageView, Image image) {
