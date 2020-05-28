@@ -472,6 +472,24 @@
                         </AnchorPane>
                     </content>
                   </TitledPane>
+                  <TitledPane animated="false" text="Operações morfológicas">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Button layoutX="60.0" layoutY="105.0" mnemonicParsing="false" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Dilatação">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="69.0" layoutY="45.0" mnemonicParsing="false" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Erosão">
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </TitledPane>
               </panes>
             </Accordion>
          </left>
