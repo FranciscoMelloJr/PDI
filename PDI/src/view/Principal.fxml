@@ -264,36 +264,36 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0">
                            <children>
-                              <VBox>
+                              <VBox prefHeight="224.0" prefWidth="189.0">
                                  <children>
                                     <Label text="\% Imagem 1">
                                        <VBox.margin>
-                                          <Insets left="50.0" top="10.0" />
+                                          <Insets left="60.0" top="5.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Slider fx:id="sliderIMG1" showTickLabels="true" showTickMarks="true">
+                                    <Slider fx:id="sliderIMG1" prefHeight="25.0" prefWidth="125.0" showTickLabels="true" showTickMarks="true">
                                        <VBox.margin>
-                                          <Insets left="25.0" top="5.0" />
+                                          <Insets left="20.0" right="20.0" top="5.0" />
                                        </VBox.margin>
                                     </Slider>
                                     <Label text="\% Imagem 2">
                                        <VBox.margin>
-                                          <Insets left="50.0" top="10.0" />
+                                          <Insets left="60.0" top="5.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Slider fx:id="sliderIMG2" showTickLabels="true" showTickMarks="true">
+                                    <Slider fx:id="sliderIMG2" prefHeight="20.0" prefWidth="40.0" showTickLabels="true" showTickMarks="true">
                                        <VBox.margin>
-                                          <Insets left="25.0" top="5.0" />
+                                          <Insets left="20.0" right="20.0" top="5.0" />
                                        </VBox.margin>
                                     </Slider>
                                     <Button mnemonicParsing="false" onAction="#aplicarAdicao" style="-fx-border-color: gray; -fx-background-radius: 25; -fx-border-radius: 25;" text="Adição">
                                        <VBox.margin>
-                                          <Insets left="60.0" top="15.0" />
+                                          <Insets left="65.0" top="10.0" />
                                        </VBox.margin>
                                     </Button>
                                     <Button mnemonicParsing="false" onAction="#aplicarSubtracao" style="-fx-border-color: gray; -fx-background-radius: 25; -fx-border-radius: 25;" text="Subtração">
                                        <VBox.margin>
-                                          <Insets left="51.0" top="15.0" />
+                                          <Insets left="56.0" top="5.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>
