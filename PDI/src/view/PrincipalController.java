@@ -5,11 +5,16 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 import org.opencv.core.Size;
+import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -196,6 +201,49 @@ public class PrincipalController {
 
 		img3 = Pdi.ruidos(img1, op);
 		atualizaImagem3();
+	}
+
+	@FXML
+	public void morphologyEx() {
+
+		Mat matriz = Utils.imageMat(img1);
+
+		Mat erosao = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(8, 8));
+		Mat dilatacao = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(8, 8));
+
+		Mat abreElemento = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3), new Point(1, 1));
+		Mat fechaElemento = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(7, 7), new Point(3, 3));
+
+	//	Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_OPEN, erosao);
+		Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_OPEN, dilatacao);
+	//	Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_OPEN, abreElemento);
+	//	Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_CLOSE, fechaElemento);
+
+		Imgproc.dilate(matriz, dilatacao, dilatacao);
+
+		updateCurrentImage(Utils.matImage(matriz));
+		updateCurrentImage(imageView3, img3);
+	}
+
+	@FXML
+	public void doDilate() {
+		Mat img = Utils.imageMat(img1);
+		img = dilate(img);
+		updateCurrentImage(Utils.matImage(img));
+		updateCurrentImage(imageView3, img3);
+	}
+
+	public Mat dilate(Mat matriz) {
+		Mat matrizDilate = new Mat();
+		Imgproc.dilate(matriz, matrizDilate, matrizDilate);
+		return matrizDilate;
+	}
+
+	// FILTRO MORFOLOGICO
+	public Mat erode(Mat matriz) {
+		Mat matrizErode = new Mat();
+		Imgproc.erode(matriz, matrizErode, matrizErode);
+		return matrizErode;
 	}
 
 	@FXML
