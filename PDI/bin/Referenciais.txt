@@ -1,0 +1,13 @@
+Referencia 
+
+Conversão image para mat
+https://stackoverflow.com/questions/34771380/how-to-convert-a-javafx-image-to-a-opencv-matrix
+
+Github opencv
+https://github.com/opencv-java/image-segmentation/blob/master/src/it/polito/elite/teaching/cv/ImageSegController.java
+
+GitHub Laplace
+https://github.com/opencv/opencv/blob/b39cd06249213220e802bb64260727711d9fc98c/samples/java/tutorial_code/ImgTrans/LaPlace/LaplaceDemo.java
+
+Operações morfológicas
+https://www.programcreek.com/java-api-examples/?class=org.opencv.imgproc.Imgproc&method=dilate
