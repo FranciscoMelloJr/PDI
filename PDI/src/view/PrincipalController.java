@@ -3,20 +3,10 @@ package view;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
 import org.opencv.core.Size;
-import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
-
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -204,53 +194,34 @@ public class PrincipalController {
 	}
 
 	@FXML
-	public void morphologyEx() {
-
-		Mat matriz = Utils.imageMat(img1);
-
-		Mat erosao = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(8, 8));
-		Mat dilatacao = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(8, 8));
-
-		Mat abreElemento = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3), new Point(1, 1));
-		Mat fechaElemento = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(7, 7), new Point(3, 3));
-
-	//	Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_OPEN, erosao);
-		Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_OPEN, dilatacao);
-	//	Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_OPEN, abreElemento);
-	//	Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_CLOSE, fechaElemento);
-
-		Imgproc.dilate(matriz, dilatacao, dilatacao);
-
-		updateCurrentImage(Utils.matImage(matriz));
+	public void doErode() {
+		updateCurrentImage(Utils.matImage(Pdi.erodir(Utils.imageMat(img1))));
 		updateCurrentImage(imageView3, img3);
 	}
 
 	@FXML
 	public void doDilate() {
-		Mat img = Utils.imageMat(img1);
-		img = dilate(img);
-		updateCurrentImage(Utils.matImage(img));
+		updateCurrentImage(Utils.matImage(Pdi.dilatar(Utils.imageMat(img1))));
 		updateCurrentImage(imageView3, img3);
 	}
 
-	public Mat dilate(Mat matriz) {
-		Mat matrizDilate = new Mat();
-		Imgproc.dilate(matriz, matrizDilate, matrizDilate);
-		return matrizDilate;
+	@FXML
+	public void doOpening() {
+		updateCurrentImage(Utils.matImage(Pdi.abrir(Utils.imageMat(img1))));
+		updateCurrentImage(imageView3, img3);
 	}
 
-	// FILTRO MORFOLOGICO
-	public Mat erode(Mat matriz) {
-		Mat matrizErode = new Mat();
-		Imgproc.erode(matriz, matrizErode, matrizErode);
-		return matrizErode;
+	@FXML
+	public void doClosure() {
+		updateCurrentImage(Utils.matImage(Pdi.fechar(Utils.imageMat(img1))));
+		updateCurrentImage(imageView3, img3);
 	}
 
 	@FXML
 	public void sobelSelecionado() {
 		isSelected();
 		if (this.sobel.isSelected()) {
-			fazerSobel(Utils.imageMat(img1));
+			updateCurrentImage(Utils.matImage(Pdi.fazerSobel(Utils.imageMat(img1))));
 		}
 		updateCurrentImage(imageView3, img3);
 	}
@@ -268,29 +239,9 @@ public class PrincipalController {
 	public void laplaceSelecionado() {
 		isSelected();
 		if (this.laplace.isSelected()) {
-			fazerLaplace(Utils.imageMat(img1));
+			updateCurrentImage(Utils.matImage(Pdi.fazerLaplace(Utils.imageMat(img1))));
 		}
 		updateCurrentImage(imageView3, img3);
-	}
-
-	private void fazerSobel(Mat frame) {
-		Mat grayMat = new Mat();
-		Mat sobel = new Mat();
-
-		Mat grad_x = new Mat();
-		Mat abs_grad_x = new Mat();
-
-		Mat grad_y = new Mat();
-		Mat abs_grad_y = new Mat();
-
-		Imgproc.cvtColor(frame, grayMat, Imgproc.COLOR_BGR2GRAY);
-		Imgproc.Sobel(grayMat, grad_x, CvType.CV_16S, 1, 0, 3, 1, 0);
-		Imgproc.Sobel(grayMat, grad_y, CvType.CV_16S, 0, 1, 3, 1, 0);
-		Core.convertScaleAbs(grad_x, abs_grad_x);
-		Core.convertScaleAbs(grad_y, abs_grad_y);
-		Core.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 1, sobel);
-
-		updateCurrentImage(Utils.matImage(sobel));
 	}
 
 	public void fazerCanny(Mat frame) {
@@ -306,32 +257,6 @@ public class PrincipalController {
 		frame.copyTo(dest, detectedEdges);
 		updateCurrentImage(Utils.matImage(detectedEdges));
 
-	}
-
-	public void fazerLaplace(Mat frame) {
-
-		Mat src = frame, src_gray = new Mat(), dst = new Mat();
-		int kernel_size = 3;
-		int scale = 1;
-		int delta = 0;
-		int ddepth = CvType.CV_16S;
-
-		if (src.empty()) {
-			System.out.println("Erro ao abrir imagem");
-		}
-
-		Imgproc.GaussianBlur(src, src, new Size(3, 3), 0, 0, Core.BORDER_DEFAULT);
-		Imgproc.cvtColor(src, src_gray, Imgproc.COLOR_RGB2GRAY);
-
-		Mat abs_dst = new Mat();
-		Imgproc.Laplacian(src_gray, dst, ddepth, kernel_size, scale, delta, Core.BORDER_DEFAULT);
-		Core.convertScaleAbs(dst, abs_dst);
-
-		/**
-		 * Mostrar em uma nova aba. HighGui.imshow(window_name, abs_dst);
-		 * HighGui.waitKey(0);
-		 **/
-		updateCurrentImage(Utils.matImage(abs_dst));
 	}
 
 	@FXML
@@ -457,11 +382,11 @@ public class PrincipalController {
 
 	}
 
-	private void updateCurrentImage(ImageView imageView, Image image) {
+	public void updateCurrentImage(ImageView imageView, Image image) {
 		imageView.setImage(image);
 	}
 
-	private void updateCurrentImage(Image image) {
+	public void updateCurrentImage(Image image) {
 		img3 = image;
 	}
 

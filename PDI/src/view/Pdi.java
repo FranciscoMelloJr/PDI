@@ -3,6 +3,13 @@ package view;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
+
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
@@ -13,6 +20,98 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 public class Pdi {
+
+	public static Mat dilatar(Mat matriz) {
+
+		// Aumentar o tamanho para ter uma maior alcance conforme necessário
+		Mat dilatacao = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(8, 8));
+
+		Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_OPEN, dilatacao);
+		Imgproc.cvtColor(matriz, matriz, Imgproc.COLOR_BGRA2BGR);
+
+		return matriz;
+
+	}
+
+	public static Mat erodir(Mat matriz) {
+
+		// Aumentar o tamanho para ter uma maior profundidade conforme necessário
+		Mat erosao = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(8, 8));
+
+		Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_CLOSE, erosao);
+		Imgproc.cvtColor(matriz, matriz, Imgproc.COLOR_BGRA2BGR);
+
+		return matriz;
+	}
+
+	public static Mat abrir(Mat matriz) {
+
+		Mat abreElemento = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3), new Point(1, 1));
+
+		Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_OPEN, abreElemento);
+		Imgproc.cvtColor(matriz, matriz, Imgproc.COLOR_BGRA2BGR);
+
+		return matriz;
+	}
+
+	public static Mat fechar(Mat matriz) {
+
+		Mat fechaElemento = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(7, 7), new Point(3, 3));
+
+		Imgproc.morphologyEx(matriz, matriz, Imgproc.MORPH_CLOSE, fechaElemento);
+		Imgproc.cvtColor(matriz, matriz, Imgproc.COLOR_BGRA2BGR);
+
+		return matriz;
+	}
+
+	public static Mat fazerSobel(Mat frame) {
+		Mat grayMat = new Mat();
+		Mat sobel = new Mat();
+
+		Mat grad_x = new Mat();
+		Mat abs_grad_x = new Mat();
+
+		Mat grad_y = new Mat();
+		Mat abs_grad_y = new Mat();
+
+		Imgproc.cvtColor(frame, grayMat, Imgproc.COLOR_BGR2GRAY);
+		Imgproc.Sobel(grayMat, grad_x, CvType.CV_16S, 1, 0, 3, 1, 0);
+		Imgproc.Sobel(grayMat, grad_y, CvType.CV_16S, 0, 1, 3, 1, 0);
+		Core.convertScaleAbs(grad_x, abs_grad_x);
+		Core.convertScaleAbs(grad_y, abs_grad_y);
+		Core.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 1, sobel);
+
+		return sobel;
+
+	}
+
+	public static Mat fazerLaplace(Mat frame) {
+
+		Mat src = frame, src_gray = new Mat(), dst = new Mat();
+		int kernel_size = 3;
+		int scale = 1;
+		int delta = 0;
+		int ddepth = CvType.CV_16S;
+
+		if (src.empty()) {
+			System.out.println("Erro ao abrir imagem");
+		}
+
+		Imgproc.GaussianBlur(src, src, new Size(3, 3), 0, 0, Core.BORDER_DEFAULT);
+		Imgproc.cvtColor(src, src_gray, Imgproc.COLOR_RGB2GRAY);
+
+		Mat abs_dst = new Mat();
+		Imgproc.Laplacian(src_gray, dst, ddepth, kernel_size, scale, delta, Core.BORDER_DEFAULT);
+		Core.convertScaleAbs(dst, abs_dst);
+
+		/**
+		 * Mostrar em uma nova aba. HighGui.imshow(window_name, abs_dst);
+		 * HighGui.waitKey(0);
+		 **/
+
+		return abs_dst;
+
+	}
 
 	public static boolean identificarQuebra(Image img1) {
 

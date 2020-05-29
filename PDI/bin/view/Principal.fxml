@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PrincipalController">
+<AnchorPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PrincipalController">
    <children>
       <BorderPane prefHeight="600.0" prefWidth="750.0">
          <top>
@@ -476,14 +476,24 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Button layoutX="60.0" layoutY="105.0" mnemonicParsing="false" onAction="#morphologyEx" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Dilatação">
+                              <Button layoutX="60.0" layoutY="50.0" mnemonicParsing="false" onAction="#doDilate" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Dilatação">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="69.0" layoutY="45.0" mnemonicParsing="false" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Erosão">
+                              <Button layoutX="69.0" layoutY="14.0" mnemonicParsing="false" onAction="#doErode" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Erosão">
                                  <font>
                                     <Font name="System Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="60.0" layoutY="105.0" mnemonicParsing="false" onAction="#doOpening" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Abertura">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="52.0" layoutY="140.0" mnemonicParsing="false" onAction="#doClosure" style="-fx-border-radius: 25; -fx-border-color: gray; -fx-background-radius: 25;" text="Fechamento">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
                                  </font>
                               </Button>
                            </children>
